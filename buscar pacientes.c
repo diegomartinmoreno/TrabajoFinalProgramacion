@@ -70,3 +70,18 @@ PACIENTE buscarXNombreApellido (char nomApe[]){
     }
     return coincidencias[hits];
 }
+
+PACIENTE buscarPaciente(){
+    imprimirHeader(" Busqueda de Pacientes");
+    PACIENTE pac;
+    char input[sizeNom];
+    fflush(stdin);
+    gets(input);
+    if (input[0]>48 && input[0]<57){
+        int dni = atoi(input);
+        pac=buscarXDNI(dni);
+    } else {
+        pac=buscarXNombreApellido(input);
+    }
+    return pac;
+}
