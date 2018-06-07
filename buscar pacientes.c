@@ -32,7 +32,7 @@ PACIENTE buscarXDNI (int buscado){
     return encontrado;
 }
 
-PACIENTE buscarXNA (char nomApe[]){
+PACIENTE buscarXNombreApellido (char nomApe[]){
     FILE *fichero;
     PACIENTE pac, coincidencias[10];
     int hits=0, cantPac, i, seleccion;
