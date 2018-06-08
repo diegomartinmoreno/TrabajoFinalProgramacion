@@ -1,9 +1,9 @@
-#include "headers.h"
+#include "header.h"
 
 int contarPacientes (FILE *fichero){
     int cantPac=0;
     fseek(fichero, 0L, SEEK_END);
-    cantPac=ftell(fichero)/sizeof(pac);
+    cantPac=ftell(fichero)/sizeof(PACIENTE);
     fseek(fichero, 0L, SEEK_SET);
     return cantPac;
 }
@@ -15,16 +15,16 @@ PACIENTE buscarXDNI (int buscado){
     int cantPac, i, rep;
     cantPac=contarPacientes(fichero);
     if (fichero!=NULL && cantPac>0){
-        for(i=1; i<cantPac, i++){
+        for(i=1; i<cantPac; i++){
             fread(&pac, sizeof(PACIENTE), 1, fichero);
-            if (eliminado==0 && pac.dni==buscado){
+            if (pac.eliminado==0 && pac.dni==buscado){
                 encontrado=pac;
                 rep++;
             }
         }
     }
     else {
-        printf("Directorio de fichero %s incorrecto.", path);
+        printf("Directorio de fichero %s incorrecto.", pathPac);
     }
     if (rep>1)
         puts("ERROR EN LA BASE DE DATOS, EL DNI SE ENCUENTRA INGRESADO EN MAS DE UN PACIENTE");
@@ -59,14 +59,14 @@ PACIENTE buscarXNombreApellido (char nomApe[]){
                 seleccion--;
                 if(seleccion>hits||seleccion<0){
                     printf("Ingreso una opcion invalida. Intente otra vez entre 0 y %i.\n", hits);
-                } while (seleccion>hits||seleccion<0);
-            }
+                }
+            }while (seleccion>hits||seleccion<0);
             hits=seleccion;
         }
 
     }
     else {
-        printf("Directorio de fichero %s incorrecto.", path);
+        printf("Directorio de fichero %s incorrecto.", pathPac);
     }
     return coincidencias[hits];
 }
