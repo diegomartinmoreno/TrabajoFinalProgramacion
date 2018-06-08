@@ -39,7 +39,7 @@ PACIENTE buscarXNombreApellido (char nomApe[]){
     fichero = fopen(pathPac, "r");
     cantPac=contarPacientes(fichero);
     if (fichero!=NULL && cantPac>0){
-        while (hits<10, richero!=EOF){
+        while (hits<10, fichero!=EOF){
             fread(&pac, sizeof(PACIENTE), 1, fichero);
             if (strcmp(nomApe, pac.nombreApellido)==0){
                 coincidencias[hits]=pac;
