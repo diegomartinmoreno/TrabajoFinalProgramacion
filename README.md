@@ -10,4 +10,5 @@ Dia 05/06 -- Moreno - Funciones de busqueda y modificacion de pacientes. Funcion
 Día 05/06 -- Toledo - Creacion de base de datos para pacientes, generador de turnos, archivo de base de datos de habitaciones disponibles.
 Dia 06/06 -- Toledo - Creacion base de datos medicos, con respectivas especialidades.
 Dia 07/06 -- Moreno - Finalizacion de funciones de busqueda, reconocimiento automatico de entradas, introduccion a funciones de tiempo.
+Dia 12/06 -- Moreno - Funciones de busqueda de medicos, busquedas indexadas automaticamente por coincidencia con especialidades o nombres y ordenadas por matriculas y especialidades crecientes.
 */
