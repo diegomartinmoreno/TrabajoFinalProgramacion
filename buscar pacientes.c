@@ -1,4 +1,4 @@
-#include "header.h"
+#include "headers.h"
 
 int contarPacientes (FILE *fichero){
     int cantPac=0;

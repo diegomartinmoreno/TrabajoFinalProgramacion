@@ -1,3 +1,4 @@
+#include "headers.h"
 
 int Encontrado(char mat[][sizeNom], char buscado[], int dimL){
     int i, encontrado=0;
@@ -41,7 +42,7 @@ void ordenarMedicos(MEDICO meds[], int dimL){
     int i, j;
     for (i=0; i<dimL ;i++){
         for (j=dimL-i; j<0; j++){
-            
+
         }
     }
 }

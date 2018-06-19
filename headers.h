@@ -9,8 +9,9 @@
 
 #define sizeNom 50
 
-const char pathPac[]="c:\\COMPLETAR";
-
+const char pathPac[]=".\\dataPac";
+const char pathMed[]=".\\dataMed";
+const char pathHab[]=".\\dataHab";
 
 typedef struct{
     char nombreApellido[sizeNom];
@@ -55,6 +56,24 @@ int contarPacientes (FILE *fichero);
 PACIENTE buscarXDNI (int buscado);
 PACIENTE buscarXNombreApellido (char nomApe[]);
 PACIENTE buscarPaciente();
+
+// banco de prueba.c
+void subMenuOpc3(int opc); //REGISTRO DE INTERNACIONES
+void menuOp1swt(int op); // REGISTRO DE PACIENTES
+
+// buscar Medico.c
+int Encontrado(char mat[][sizeNom], char buscado[], int dimL);
+int determinarEspecialidades (char especialidades[][sizeNom]);
+void imprimirMedicos(MEDICO meds[], int dimL);
+void ordenarMedicos(MEDICO meds[], int dimL);
+void imprimirXESPEC(char busqueda[]);
+void imprimirXNOM(char busqueda[]);
+void buscarMed(char busqueda[]);
+
+// base Medicos
+/*Al inicio de la base de datos de Medicos hay un dato entero (4bytes), cuyo valor indica 1=los turnos han sido inicializados, 0= los turnos guardan basura.
+*/
+void inicializadorTurnos ();
 
 
 #endif // H_H_INCLUDED

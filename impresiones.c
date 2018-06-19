@@ -1,4 +1,4 @@
-#include "h.h"
+#include "headers.h"
 
 void imprimirPaciente (PACIENTE pac){
     if (pac.eliminado==0){
@@ -48,7 +48,7 @@ void imprimirHeader(char titulo[]){
 void imprimirMenuPrincipal (){
     system("cls");
     imprimirHeader("  MENU PRINCIPAL    ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Cargar, eliminar o modificar registro de pacientes. \n\t2.- Turnos.\n\t3.- Alta/Baja o modificacion de internaciones.\n\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Cargar, eliminar o modificar registro de pacientes. \n\t2.- Turnos.\n\t3.- Alta/Baja o modificacion de internaciones.\n\t4.- Salir del sistema\n");
 };
 
 void imprimirMenuOp1 () {
@@ -63,4 +63,14 @@ void imprimirMenuOp2 () {
 
 void imprimirMenuOp3 () {
 
+};
+
+void iniciarSistema(){
+    puts("Bienvenido/a al trabajo final de Laboratorio 1.");
+    puts ("Integrantes del grupo: Lautaro Toledo y Diego Moreno.");
+    system("Pause");
+    system("cls");
+    inicializadorHabitaciones();
+    inicializadorTurnos();
+    SwitchMenuPrincipal();
 };
