@@ -123,6 +123,7 @@ void menuOpInternaciones(){
             case 5:
                 system("cls");
                 imprimirHeader("     Nuevo interno    ");
+                cargarHab();
                 system("pause");
             break;
             case 6:

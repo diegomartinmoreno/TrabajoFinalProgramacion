@@ -17,6 +17,12 @@
 #define pathHab ".\\dataHab"
 
 typedef struct{
+    int ano;
+    int mes;
+    int dia;
+}FECHA; // Agregado para manejo automatico de desocupacion.
+
+typedef struct{
     char nombreApellido[sizeNom];
     int dni;
     int edad;
@@ -43,9 +49,9 @@ typedef struct{
 typedef struct{
     int nroHabitacion;
     int ocupado;
-    PACIENTE paciente;
-    int diaIngreso; // Agregado para manejo automatico de internaciones.
-    int diaAlta; // Agregado para manejo automatico de internaciones.
+    int dniPac;
+    FECHA ingreso; // Agregado para manejo automatico de desocupacion.
+    FECHA alta; // Agregado para manejo automatico de desocupacion.
 }HABITACION;
 
 // procesamientoMenu.c
@@ -76,7 +82,8 @@ PACIENTE buscarXNombreApellido (char nomApe[]);
 PACIENTE buscarPaciente();
 
 //basePacientes.c
-PACIENTE cargaPaciente ();
+PACIENTE leerPaciente ();
+PACIENTE guardarPaciente();
 int cargaPacientes ();
 void modificarPacientes ();
 void eliminarPacientes();
@@ -107,6 +114,10 @@ MEDICO buscarMed();
 //baseHabitaciones.c
 void inicializadorHabitaciones();
 void listarHabitaciones(int ocupado); // Ocupado -> 0 para listar OCUPADAS, 1 para listar LIBRES, 2 para listar TODAS.
+void cargarHab();
+
+//buscarHabitaciones.c
+HABITACION obtenerHab();
 
 //RANDOM solo a fines de ejemplo
 void generarEspecialidad(char resultado[]);

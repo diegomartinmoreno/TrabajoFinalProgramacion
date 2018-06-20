@@ -1,7 +1,7 @@
 #include "headers.h"
 
 
-PACIENTE cargaPaciente (){
+PACIENTE leerPaciente (){
     PACIENTE pac;
     pac.eliminado=0;
     pac.cantAtendido=0;
@@ -38,7 +38,7 @@ void modificarPacientes (){
             }
             if (pac.dni==aux.dni){
                 fseek(db, -sizeof(PACIENTE), SEEK_CUR);
-                aux=cargaPaciente();
+                aux=leerPaciente();
                 fwrite(&aux, sizeof(PACIENTE), 1, db);
             } else {
                 puts("El paciente que desea modificar no se encuentra en la base de datos.");
@@ -89,24 +89,33 @@ void eliminarPacientes(){
     fclose(db);
 }
 
-int cargaPacientes (){
+PACIENTE guardarPaciente(){
+    PACIENTE pac, aux;
+    pac=leerPaciente();
+    aux=buscarXDNI(pac.dni);
     FILE *db;
-    char opc;
-    PACIENTE pac;
-    int i=0;
     db=fopen(pathPac,"ab");
     if (db==NULL){
         puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
     }else {
-        do{
-            pac=cargaPaciente();
+        if(aux.eliminado==0)
             fwrite(&pac, sizeof(PACIENTE), 1, db);
-            i++;
-            printf("Desea continuar? S/N \n");
-            fflush(stdin);
-            opc=getchar();
-        }while (opc=='s'||opc=='S');
+        else
+            puts("La persona que intenta cargar ya se encuentra en la base de datos.");
     }
     fclose(db);
+    return pac;
+}
+
+int cargaPacientes (){
+    char opc;
+    int i=0;
+    do{
+        guardarPaciente();
+        i++;
+        printf("Desea continuar? S/N \n");
+        fflush(stdin);
+        opc=getchar();
+    }while (opc=='s'||opc=='S');
     return i;
 }
