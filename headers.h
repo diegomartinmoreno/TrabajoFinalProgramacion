@@ -53,6 +53,7 @@ void SwitchMenuPrincipal();
 ////impresiones.c
 void imprimirMedicos(MEDICO meds[], int dimL);
 void imprimirPacientes(PACIENTE pacs[], int dimL);
+void imprimirHabitacion(HABITACION hab);
 void imprimirMenuOpPacientes ();
 void imprimirMenuOpTurnos ();
 void imprimirMenuOpInternaciones ();
@@ -79,10 +80,13 @@ void menuOp1swt(int op); // REGISTRO DE PACIENTES
 
 // baseMedicos.c
 int contarMedicos(FILE *fichero);
+void eliminarMedico();
 void listarMedicos();
-void inicializadorTurnos ();
+void inicializarTurno(MEDICO *med);
+void modificarMedico();
+void modificarMedicos();
+MEDICO leerMedico();
 void cargaMedicos();
-void cargaMedico();
 
 // buscarMedico.c
 int Encontrado(char mat[][sizeNom], char buscado[], int dimL);
@@ -94,5 +98,13 @@ MEDICO buscarMed();
 
 //baseHabitaciones.c
 void inicializadorHabitaciones();
+void listarHabitaciones();
+
+//RANDOM solo a fines de ejemplo
+void generarEspecialidad(char resultado[]);
+void generarNombre(char resultado[]);
+void cargarMedsRandom (int cant);
+void cargarPacsRandom(int cant);
+
 
 #endif // H_H_INCLUDED
