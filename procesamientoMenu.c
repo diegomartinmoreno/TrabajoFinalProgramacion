@@ -35,7 +35,7 @@ void iniciarSistema(){
 
 void menuOpPacientes(){
     PACIENTE pac;
-    char control;
+    char control='n';
     int op;
     do{
         imprimirMenuOpPacientes();
@@ -87,11 +87,10 @@ void menuOpPacientes(){
             break;
         }
     }while (control!='s'&&control!='S');
-    SwitchMenuPrincipal();
 }
 
 void menuOpInternaciones(){
-    char control;
+    char control='n';
     int op;
     do{
         imprimirMenuOpInternaciones();
@@ -100,35 +99,43 @@ void menuOpInternaciones(){
         switch(op){
             case 1:
                 system("cls");
-                imprimirHeader("   Internos activos   ");
+                imprimirHeader("    Buscar interno    ");
                 system("pause");
             break;
             case 2:
                 system("cls");
-                imprimirHeader("   Hab. disponibles   ");
+                imprimirHeader("   Internos activos   ");
+                listarHabitaciones(1);
                 system("pause");
             break;
             case 3:
                 system("cls");
-                imprimirHeader(" Listado habitaciones ");
+                imprimirHeader("   Hab. disponibles   ");
+                listarHabitaciones(0);
                 system("pause");
             break;
             case 4:
                 system("cls");
-                imprimirHeader("     Nuevo interno    ");
+                imprimirHeader(" Listado habitaciones ");
+                listarHabitaciones(2);
                 system("pause");
             break;
             case 5:
                 system("cls");
-                imprimirHeader("   Modificar Interno  ");
+                imprimirHeader("     Nuevo interno    ");
                 system("pause");
             break;
             case 6:
                 system("cls");
-                imprimirHeader("  Dar interno de Alta ");
+                imprimirHeader("   Modificar Interno  ");
                 system("pause");
             break;
             case 7:
+                system("cls");
+                imprimirHeader("  Dar interno de Alta ");
+                system("pause");
+            break;
+            case 8:
                 puts("Volver al menu principal? S/N\n");
                 fflush(stdin);
                 scanf("%c",&control);
@@ -141,7 +148,6 @@ void menuOpInternaciones(){
             break;
         }
     }while (control!='s'&&control!='S');
-    SwitchMenuPrincipal();
 }
 
 void menuOpMedicos(){
@@ -195,7 +201,10 @@ void menuOpMedicos(){
             break;
         }
     }while (control!='s'&&control!='S');
-    SwitchMenuPrincipal();
+}
+
+void menuOpTurnos(){
+
 }
 
 void SwitchMenuPrincipal(){
@@ -211,6 +220,8 @@ void SwitchMenuPrincipal(){
                 menuOpPacientes();
             break;
             case 2:
+                system("cls");
+                menuOpTurnos();
             break;
             case 3:
                 system("cls");
@@ -221,10 +232,10 @@ void SwitchMenuPrincipal(){
                 menuOpMedicos();
             break;
             case 5:
-                system("cls");
-                puts("\nSeguro desea salir del sistema? S/N");
+                puts("\nDesea salir del sistema? S/N");
                 fflush(stdin);
                 flag=getchar();
+                system("cls");
             break;
             default:
                 puts("OPCION INCORRECTA.");
@@ -233,5 +244,5 @@ void SwitchMenuPrincipal(){
                 imprimirMenuPrincipal();
             break;
         }
-    } while (flag!='S'&&flag!='s');
+    }while(flag!='s'&&flag!='S');
 }

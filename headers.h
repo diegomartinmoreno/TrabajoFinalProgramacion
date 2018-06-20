@@ -7,7 +7,9 @@
 #include <string.h>
 #include <time.h>
 
-#define sizeNom 50 //Tamaño maximo permitido para los nombres.
+#define sizeNom 50 // Tamaño maximo permitido para los nombres.
+#define pisosHab 5 // Cantidad de pisos que tiene la clinica.
+#define habXPiso 10 // Cantidad de habitaciones por piso.
 
 //Rutas a bases de datos.
 #define pathPac ".\\dataPac"
@@ -42,12 +44,18 @@ typedef struct{
     int nroHabitacion;
     int ocupado;
     PACIENTE paciente;
+    int diaIngreso; // Agregado para manejo automatico de internaciones.
+    int diaAlta; // Agregado para manejo automatico de internaciones.
 }HABITACION;
 
 // procesamientoMenu.c
 int inicializarBasesDatos(char path[]);
 void iniciarSistema();
+
 void menuOpPacientes();
+void menuOpTurnos();
+void menuOpInternaciones();
+void menuOpMedicos();
 void SwitchMenuPrincipal();
 
 ////impresiones.c
@@ -98,7 +106,7 @@ MEDICO buscarMed();
 
 //baseHabitaciones.c
 void inicializadorHabitaciones();
-void listarHabitaciones();
+void listarHabitaciones(int ocupado); // Ocupado -> 0 para listar OCUPADAS, 1 para listar LIBRES, 2 para listar TODAS.
 
 //RANDOM solo a fines de ejemplo
 void generarEspecialidad(char resultado[]);

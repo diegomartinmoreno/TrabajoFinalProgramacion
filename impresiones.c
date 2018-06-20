@@ -24,13 +24,14 @@ void imprimirHabitacion(HABITACION hab){
     printf("%c", 201);
     for (j=0; j<50; j++)
         printf("%c", 205);
-    printf("Habitacion numero %i", hab.nroHabitacion);
+    printf("\n%c>>> Habitacion numero %i\n",186 , hab.nroHabitacion);
     if (hab.ocupado==0)
-        puts("Habitacion LIBRE.");
+        printf("%cHabitacion LIBRE.\n",186);
     else{
-        puts("Habitacion ocupada por:");
+        printf("\t%cHabitacion ocupada por:",186);
         imprimirPacientes(&hab.paciente, 1);
-    }
+        printf("\n%c",186);
+        }
     printf("%c", 200);
     for (j=0; j<50; j++)
         printf("%c", 205);
@@ -109,7 +110,7 @@ void imprimirMenuOpTurnos () {
 void imprimirMenuOpInternaciones () {
     system("cls");
     imprimirHeader("  Administrar Turnos  ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Ver internaciones activas. \n\t2.- Ver habitaciones libres.\n\t3.- Ver listado total de habitaciones.\n\t4.- Ingresar nuevo interno. \n\t5.- Modificar interno.\n\t6.- Dar de alta internos.\n\t7.- Volver al Menu Principal.\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Buscar interno.\n\t2.- Ver internaciones activas. \n\t3.- Ver habitaciones libres.\n\t4.- Ver listado total de habitaciones.\n\t5.- Ingresar nuevo interno. \n\t6.- Modificar interno.\n\t7.- Dar de alta internos.\n\t8.- Volver al Menu Principal.\n");
 };
 
 void imprimirMenuOpMedicos () {
