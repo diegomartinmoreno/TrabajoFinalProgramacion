@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +22,7 @@ int main()
     mostrarDb();
 
 }
+
 void openDb (){
     FILE *db;
         puts("BIENVENIDO.\n");
@@ -80,3 +82,4 @@ void mostrarDb(){
     printf("\t\t%i  \n",p1.edad);
     fclose(db);
 }
+*/

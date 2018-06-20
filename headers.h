@@ -7,11 +7,12 @@
 #include <string.h>
 #include <time.h>
 
-#define sizeNom 50
+#define sizeNom 50 //Tamaño maximo permitido para los nombres.
 
-const char pathPac[]=".\\dataPac";
-const char pathMed[]=".\\dataMed";
-const char pathHab[]=".\\dataHab";
+//Rutas a bases de datos.
+#define pathPac ".\\dataPac"
+#define pathMed ".\\dataMed"
+#define pathHab ".\\dataHab"
 
 typedef struct{
     char nombreApellido[sizeNom];
@@ -43,37 +44,55 @@ typedef struct{
     PACIENTE paciente;
 }HABITACION;
 
-
+// procesamientoMenu.c
+int inicializarBasesDatos(char path[]);
 void iniciarSistema();
+void menuOpPacientes();
+void SwitchMenuPrincipal();
 
 ////impresiones.c
+void imprimirMedicos(MEDICO meds[], int dimL);
+void imprimirPacientes(PACIENTE pacs[], int dimL);
+void imprimirMenuOpPacientes ();
+void imprimirMenuOpTurnos ();
+void imprimirMenuOpInternaciones ();
+void imprimirMenuOpMedicos ();
 void imprimirMenuPrincipal ();
 void imprimirHeader(char titulo[]);
 
-
-////buscar pacientes.c
+//buscarPacientes.c
 int contarPacientes (FILE *fichero);
 PACIENTE buscarXDNI (int buscado);
 PACIENTE buscarXNombreApellido (char nomApe[]);
 PACIENTE buscarPaciente();
 
+//basePacientes.c
+PACIENTE cargaPaciente ();
+int cargaPacientes ();
+void modificarPacientes ();
+void eliminarPacientes();
+void listarPacientes();
+
 // banco de prueba.c
 void subMenuOpc3(int opc); //REGISTRO DE INTERNACIONES
 void menuOp1swt(int op); // REGISTRO DE PACIENTES
 
-// buscar Medico.c
+// baseMedicos.c
+int contarMedicos(FILE *fichero);
+void listarMedicos();
+void inicializadorTurnos ();
+void cargaMedicos();
+void cargaMedico();
+
+// buscarMedico.c
 int Encontrado(char mat[][sizeNom], char buscado[], int dimL);
 int determinarEspecialidades (char especialidades[][sizeNom]);
-void imprimirMedicos(MEDICO meds[], int dimL);
 void ordenarMedicos(MEDICO meds[], int dimL);
-void imprimirXESPEC(char busqueda[]);
-void imprimirXNOM(char busqueda[]);
-void buscarMed(char busqueda[]);
+MEDICO imprimirXESPEC(char busqueda[]);
+MEDICO imprimirXNOM(char busqueda[]);
+MEDICO buscarMed();
 
-// base Medicos
-/*Al inicio de la base de datos de Medicos hay un dato entero (4bytes), cuyo valor indica 1=los turnos han sido inicializados, 0= los turnos guardan basura.
-*/
-void inicializadorTurnos ();
-
+//baseHabitaciones.c
+void inicializadorHabitaciones();
 
 #endif // H_H_INCLUDED

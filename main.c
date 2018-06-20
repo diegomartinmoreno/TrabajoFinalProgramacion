@@ -2,9 +2,6 @@
 
 int main()
 {
-   // iniciarSistema();
-    imprimirMenuPrincipal();
-    imprimirMenuOp1();
-    imprimirMenuOp2();
+    iniciarSistema();
     return 0;
 }

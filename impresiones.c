@@ -1,13 +1,37 @@
 #include "headers.h"
 
-void imprimirPaciente (PACIENTE pac){
-    if (pac.eliminado==0){
-        printf("Paciente %s.\n", pac.nombreApellido);
-        printf("Edad %i\n", pac.dni);
-        printf("Ha sido atendido %i veces en la clinica.\n", pac.cantAtendido);
+void imprimirPacientes(PACIENTE pacs[], int dimL){
+    int i,j;
+    for (i=0; i<dimL; i++){
+        if (pacs[i].eliminado==0){
+            printf("%c", 201);
+            for (j=0; j<50; j++)
+                printf("%c", 205);
+            printf("\n%c>>> Nombre y apellido: %s", 186, pacs[i].nombreApellido);
+            printf("\n%c\tDNI: %i",186,pacs[i].dni);
+            printf("\n%c\tEdad: %i",186,pacs[i].edad);
+            printf("\n%c\tFue atendido aqui %i veces.\n", 186,pacs[i].cantAtendido);
+            printf("%c", 200);
+            for (j=0; j<50; j++)
+                printf("%c", 205);
+            printf("\n");
+        }
     }
-    else {
-        puts("El paciente se encuentra eliminado de la base de datos.\n");
+}
+
+void imprimirMedicos(MEDICO meds[], int dimL){
+    int i, j;
+    for (i=0; i<dimL; i++){
+        if (meds[i].eliminado==0){
+            printf("%c", 201);
+            for (j=0; j<50; j++)
+                printf("%c", 205);
+            printf("\n%c>>> Nombre y apellido: %s\n%c\tMatricula: %i\n%c\tEspecialidad:%s\n", 186, meds[i].nombreApellido, 186, meds[i].matricula, 186, meds[i].especialidad);
+            printf("%c", 200);
+            for (j=0; j<50; j++)
+                printf("%c", 205);
+            printf("\n");
+        }
     }
 }
 
@@ -48,29 +72,26 @@ void imprimirHeader(char titulo[]){
 void imprimirMenuPrincipal (){
     system("cls");
     imprimirHeader("  MENU PRINCIPAL    ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Cargar, eliminar o modificar registro de pacientes. \n\t2.- Turnos.\n\t3.- Alta/Baja o modificacion de internaciones.\n\t4.- Salir del sistema\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Buscar, listar o editar registro de pacientes. \n\t2.- Carga o modificacion de turnos.\n\t3.- Alta/Baja o modificacion de internaciones.\n\t4.- Listar o modificar registro de Medicos.\n\t5.- Salir del sistema\n");
 };
 
-void imprimirMenuOp1 () {
-    //system("cls");
-    imprimirHeader("Registro de Pacientes ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Buscar paciente. \n\t2.- Agregar nuevo paciente.\n\t3.- Modificar paciente. \n\t4.- Eliminar paciente.\n\t5.- Volver al Menu Principal.\n");
-};
-
-void imprimirMenuOp2 () {
-    imprimirHeader("  Administrar Turnos  ");
-};
-
-void imprimirMenuOp3 () {
-
-};
-
-void iniciarSistema(){
-    puts("Bienvenido/a al trabajo final de Laboratorio 1.");
-    puts ("Integrantes del grupo: Lautaro Toledo y Diego Moreno.");
-    system("Pause");
+void imprimirMenuOpPacientes () {
     system("cls");
-    inicializadorHabitaciones();
-    inicializadorTurnos();
-    SwitchMenuPrincipal();
+    imprimirHeader("Registro de Pacientes ");
+    printf("Ingrese una opcion para continuar:\n\t1.- Buscar paciente(s). \n\t2.- Agregar nuevo paciente(s).\n\t3.- Modificar paciente(s). \n\t4.- Eliminar paciente(s).\n\t5.- Listado completo de pacientes.\n\t6.- Volver al Menu Principal.\n");
+};
+
+void imprimirMenuOpTurnos () {
+    imprimirHeader("  Administrar Turnos  ");
+    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Cancelar turno(s).\n\t3.- Cargar turno(s). \n\t4.- Volver al Menu Principal.\n");
+};
+
+void imprimirMenuOpInternaciones () {
+    imprimirHeader("  Administrar Turnos  ");
+    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Cancelar turno(s).\n\t3.- Cargar turno(s). \n\t4.- Volver al Menu Principal.\n");
+};
+
+void imprimirMenuOpMedicos () {
+    imprimirHeader("  Administrar Medicos ");
+    printf("Ingrese una opcion para continuar:\n\t1.- Listar medicos actualmente en nomina.\n\t2.- Buscar medico.\n\t3.- Cargar nuevo medico(s). \n\t4.- Eliminar medico(s). \n\t5.- Volver al Menu Principal.\n");
 };
