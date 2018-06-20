@@ -28,6 +28,7 @@ void listarPacientes(){
 PACIENTE buscarXDNI (int buscado){
     FILE *fichero;
     PACIENTE pac, encontrado;
+    encontrado.eliminado=1;
     fichero = fopen(pathPac, "r+b");
     int cantPac, i, rep;
     if (fichero!=NULL){
@@ -79,6 +80,10 @@ PACIENTE buscarXNombreApellido (char nomApe[]){
                         printf("Ingreso una opcion invalida. Intente otra vez entre 1 y %i.\n", hits);
                     }
                 }while (seleccion>hits||seleccion<0);
+            }
+            if (hits==0){
+                puts("No se han encontrado coincidencias.");
+                coincidencias[seleccion].eliminado=1;
             }
         }
     }

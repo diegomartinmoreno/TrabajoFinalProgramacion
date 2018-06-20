@@ -20,8 +20,12 @@ void iniciarSistema(){
     puts ("Integrantes del grupo: Lautaro Toledo y Diego Moreno.");
     system("Pause");
     system("cls");
-    inicializarBasesDatos(pathPac);
-    inicializarBasesDatos(pathMed);
+    if (inicializarBasesDatos(pathPac)){
+        cargarPacsRandom(20);
+    }
+    if (inicializarBasesDatos(pathMed)){
+        cargarMedsRandom (10);
+    }
     if (inicializarBasesDatos(pathHab)){
         inicializadorHabitaciones();
     }
@@ -39,54 +43,109 @@ void menuOpPacientes(){
         scanf("%i", &op);
         switch(op){
             case 1:
-                imprimirHeader(" Busqueda de Pacientes");
-                pac=buscarPaciente();
-                imprimirPacientes(&pac,1);
-                system("pause");
                 system("cls");
-            break;
-            case 2:
-                imprimirHeader("  Carga de Pacientes  ");
-                cargaPacientes();
-                system("pause");
-                system("cls");
-            break;
-            case 3:
-                imprimirHeader(" Modificar Pacientes  ");
-                modificarPacientes();
-                system("pause");
-                system("cls");
-            break;
-            case 4:
-                imprimirHeader("  Eliminar Pacientes  ");
-                eliminarPacientes();
-                system("pause");
-                system("cls");
-            break;
-            case 5:
                 imprimirHeader(" Listado de pacientes ");
                 listarPacientes();
                 system("pause");
                 system("cls");
             break;
+            case 2:
+                system("cls");
+                imprimirHeader("  Carga de Pacientes  ");
+                cargaPacientes();
+                system("pause");
+            break;
+            case 3:
+                system("cls");
+                imprimirHeader(" Modificar Pacientes  ");
+                modificarPacientes();
+                system("pause");
+            break;
+            case 4:
+                system("cls");
+                imprimirHeader("  Eliminar Pacientes  ");
+                eliminarPacientes();
+                system("pause");
+            break;
+            case 5:
+                system("cls");
+                imprimirHeader(" Busqueda de Pacientes");
+                pac=buscarPaciente();
+                imprimirPacientes(&pac,1);
+                system("pause");
+            break;
             case 6:
                 puts("Volver al menu principal? S/N\n");
                 fflush(stdin);
                 scanf("%c",&control);
-                if (control=='s'||control=='S'){
-                    imprimirMenuPrincipal();
-                }else{
-                    system("pause");
-                    system("cls");
-                    imprimirMenuOpPacientes();
-                }
+            break;
+            default:
+                puts("OPCION INCORRECTA.");
+                system("pause");
+                system("cls");
+                menuOpPacientes();
             break;
         }
     }while (control!='s'&&control!='S');
+    SwitchMenuPrincipal();
+}
+
+void menuOpInternaciones(){
+    char control;
+    int op;
+    do{
+        imprimirMenuOpInternaciones();
+        fflush(stdin);
+        scanf("%i", &op);
+        switch(op){
+            case 1:
+                system("cls");
+                imprimirHeader("   Internos activos   ");
+                system("pause");
+            break;
+            case 2:
+                system("cls");
+                imprimirHeader("   Hab. disponibles   ");
+                system("pause");
+            break;
+            case 3:
+                system("cls");
+                imprimirHeader(" Listado habitaciones ");
+                system("pause");
+            break;
+            case 4:
+                system("cls");
+                imprimirHeader("     Nuevo interno    ");
+                system("pause");
+            break;
+            case 5:
+                system("cls");
+                imprimirHeader("   Modificar Interno  ");
+                system("pause");
+            break;
+            case 6:
+                system("cls");
+                imprimirHeader("  Dar interno de Alta ");
+                system("pause");
+            break;
+            case 7:
+                puts("Volver al menu principal? S/N\n");
+                fflush(stdin);
+                scanf("%c",&control);
+            break;
+            default:
+                puts("OPCION INCORRECTA.");
+                system("pause");
+                system("cls");
+                menuOpInternaciones();
+            break;
+        }
+    }while (control!='s'&&control!='S');
+    SwitchMenuPrincipal();
 }
 
 void menuOpMedicos(){
-    char control;
+    char control='n';
     int op;
     do{
         imprimirMenuOpMedicos();
@@ -94,43 +153,49 @@ void menuOpMedicos(){
         scanf("%i", &op);
         switch(op){
             case 1:
+                system("cls");
                 imprimirHeader("   Nomina de Medicos  ");
                 listarMedicos();
                 system("pause");
-                system("cls");
             break;
             case 2:
+                system("cls");
                 imprimirHeader("  Busqueda de Medicos ");
                 buscarMed();
                 system("pause");
-                system("cls");
             break;
             case 3:
+                system("cls");
                 imprimirHeader("   Carga de Medicos   ");
                 cargaMedicos();
                 system("pause");
-                system("cls");
             break;
             case 4:
+                system("cls");
                 imprimirHeader("   Eliminar Medicos   ");
                 eliminarMedico();
                 system("pause");
-                system("cls");
             break;
             case 5:
+                system("cls");
+                imprimirHeader("  Modificar Medicos   ");
+                modificarMedicos();
+                system("pause");
+            break;
+            case 6:
                 puts("Volver al menu principal? S/N\n");
                 fflush(stdin);
                 scanf("%c",&control);
-                if (control=='s'||control=='S'){
-                    imprimirMenuPrincipal();
-                }else{
-                    system("pause");
-                    system("cls");
-                    imprimirMenuOpPacientes();
-                }
+            break;
+            default:
+                puts("OPCION INCORRECTA.");
+                system("pause");
+                system("cls");
+                menuOpMedicos();
             break;
         }
     }while (control!='s'&&control!='S');
+    SwitchMenuPrincipal();
 }
 
 void SwitchMenuPrincipal(){
@@ -148,6 +213,8 @@ void SwitchMenuPrincipal(){
             case 2:
             break;
             case 3:
+                system("cls");
+                menuOpInternaciones();
             break;
             case 4:
                 system("cls");

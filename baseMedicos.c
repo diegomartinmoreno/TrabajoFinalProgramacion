@@ -6,7 +6,7 @@ int contarMedicos(FILE *fichero){
     resultado=ftell(fichero)/sizeof(MEDICO);
     fseek(fichero, 0, SEEK_SET);
     return resultado;
-}
+};
 
 void listarMedicos(){
     int i, cantMed;
@@ -24,7 +24,7 @@ void listarMedicos(){
         }
     }
     fclose(fichero);
-}
+};
 
 void inicializarTurno(MEDICO *med){
     int i, d;
@@ -43,66 +43,71 @@ void inicializarTurno(MEDICO *med){
             }
         }
     }
-}
+};
+
+MEDICO leerMedico(){
+    MEDICO m;
+    printf("INGRESE NOMBRE Y APELLIDO\n");
+    fflush(stdin);
+    gets(m.nombreApellido);
+    printf("INGRESE MATRICULA\n");
+    fflush(stdin);
+    scanf("%i",&m.matricula);
+    printf("INGRESE ESPECIALIDAD\n");
+    fflush(stdin);
+    gets(m.especialidad);
+    inicializarTurno(&m);
+    m.eliminado=0;
+    return m;
+};
 
 void cargaMedicos(){
     char control='s';
-    while (control=='s'||control=='S'){
-        cargaMedico();
-        fflush(stdin);
-        printf("Desea Continuar? S/N\n");
-        control=getchar();
-    }
-}
-
-void cargaMedico(){
     FILE *db;
     MEDICO m;
     if ((db=fopen(pathMed,"a+b"))==NULL){
         puts("ERROR EN APERTURA DE ARCHIVO\n");
     }
     else{
-        printf("INGRESE NOMBRE Y APELLIDO\n");
-        fflush(stdin);
-        gets(m.nombreApellido);
-        printf("INGRESE MATRICULA\n");
-        fflush(stdin);
-        scanf("%i",&m.matricula);
-        printf("INGRESE ESPECIALIDAD\n");
-        fflush(stdin);
-        gets(m.especialidad);
-        inicializarTurno(&m);
-        m.eliminado=0;
-        fwrite(&m,sizeof(MEDICO),1,db);
+        while (control=='s'||control=='S'){
+            m=leerMedico();
+            fwrite(&m,sizeof(MEDICO),1,db);
+            fflush(stdin);
+            printf("Desea Continuar? S/N\n");
+            control=getchar();
+        }
     }
     fclose(db);
-}
+};
 
 void eliminarMedico(){
     char control='s';
     MEDICO med, aux;
-    med=buscarMed();
     int cantMed, i=0, encontrado=0;
     FILE *fichero;
     fichero=fopen(pathMed, "r+b");
-    cantMed=contarMedicos(fichero);
     if(fichero==NULL){
         perror("Error al acceder a la base de datos de Medicos.");
     }else{
+        cantMed=contarMedicos(fichero);
         while (control=='s'||control=='S'){
-            while (i<cantMed&&encontrado==0){
-                i++;
-                fread(&aux, sizeof(MEDICO), 1, fichero);
-                if (med.matricula==aux.matricula)
-                    encontrado=1;
-            }
-            if (med.matricula==aux.matricula) {
+            fclose(fichero);
+            med=buscarMed();
+            fichero=fopen(pathMed, "r+b");
+            fseek(fichero,0,SEEK_SET);
+            if (med.eliminado!=1){
+                while (i<cantMed&&encontrado==0){
+                    i++;
+                    fread(&aux, sizeof(MEDICO), 1, fichero);
+                    if (med.matricula==aux.matricula)
+                        encontrado=1;
+                }
                 fseek(fichero, -sizeof(MEDICO), SEEK_CUR);
                 strcpy(med.nombreApellido, "ELIMINADO");
                 med.eliminado=1;
                 fwrite(&med, sizeof(MEDICO), 1, fichero);
-            }
-            else{
+                puts("Su seleccion se ha eliminado con exito.");
+            } else{
                 puts("No se pudo eliminar medico ya que no se encontro en base de datos.");
             }
             puts("Desea eliminar otro medico de la nomina? S/N");
@@ -111,4 +116,42 @@ void eliminarMedico(){
         }
     }
     fclose(fichero);
-}
+};
+
+void modificarMedicos(){
+    char control='s';
+    while (control=='s'||control=='S'){
+            modificarMedico();
+            puts("Desea modificar otro medico? S/N");
+            fflush(stdin);
+            scanf("%c", &control);
+    }
+};
+
+void modificarMedico(){
+    MEDICO med, aux;
+    med=buscarMed();
+    int cantMed, i=0, encontrado=0;
+    FILE *fichero;
+    fichero=fopen(pathMed, "r+b");
+    if(fichero==NULL){
+        perror("Error al acceder a la base de datos de Medicos.");
+    }else{
+        if (med.eliminado==0){
+            cantMed=contarMedicos(fichero);
+            while (i<cantMed&&encontrado==0){
+                fread(&aux, sizeof(MEDICO), 1, fichero);
+                i++;
+                if(aux.matricula==med.matricula){
+                    encontrado=1;}
+            }
+            fseek(fichero, -sizeof(MEDICO), SEEK_CUR);
+            puts("Ingrese modificaciones:");
+            aux=leerMedico();
+            fwrite(&aux, sizeof(MEDICO), 1, fichero);
+        } else{
+            puts("El medico que desea modificar no se encuentra en la base de datos.");
+        }
+    }
+    fclose(fichero);
+};

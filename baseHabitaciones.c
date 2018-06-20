@@ -1,6 +1,5 @@
 #include "headers.h"
 
-
 void inicializadorHabitaciones(){
     FILE *db;
     int h=0, p;
@@ -18,6 +17,21 @@ void inicializadorHabitaciones(){
             }
         }
     }
+    fclose(db);
 }
 
-
+void listarHabitaciones(){
+    int i;
+    HABITACION hab;
+    FILE *db;
+    db=fopen(pathHab, "rb");
+    if (db==NULL){
+        perror("No se pudo acceder a la base de datos de Habitaciones");
+    }else{
+        for (i=0; i<50; i++){
+            fread(&hab, sizeof(HABITACION), 1, db);
+            imprimirHabitacion(hab);
+        }
+    }
+    fclose(db);
+}

@@ -75,7 +75,12 @@ MEDICO imprimirXESPEC(char busqueda[]){
     }else {
         seleccion=0;
     }
-    med=imprimir[seleccion];
+    if (hits==0){
+        med.eliminado=1;
+        puts("No se encontro ninguna coincidencia.");
+    }else{
+        med=imprimir[seleccion];
+    }
     fclose(dataMed);
     return med;
 }
@@ -110,7 +115,12 @@ MEDICO imprimirXNOM(char busqueda[]) {
     }else {
         seleccion=0;
     }
-    med=imprimir[seleccion];
+    if (hits==0){
+        med.eliminado=1;
+        puts("No se encontro ninguna coincidencia.");
+    }else{
+        med=imprimir[seleccion];
+    }
     fclose(dataMed);
     return med;
 }

@@ -19,6 +19,25 @@ void imprimirPacientes(PACIENTE pacs[], int dimL){
     }
 }
 
+void imprimirHabitacion(HABITACION hab){
+    int j;
+    printf("%c", 201);
+    for (j=0; j<50; j++)
+        printf("%c", 205);
+    printf("Habitacion numero %i", hab.nroHabitacion);
+    if (hab.ocupado==0)
+        puts("Habitacion LIBRE.");
+    else{
+        puts("Habitacion ocupada por:");
+        imprimirPacientes(&hab.paciente, 1);
+    }
+    printf("%c", 200);
+    for (j=0; j<50; j++)
+        printf("%c", 205);
+    printf("\n");
+
+}
+
 void imprimirMedicos(MEDICO meds[], int dimL){
     int i, j;
     for (i=0; i<dimL; i++){
@@ -78,20 +97,23 @@ void imprimirMenuPrincipal (){
 void imprimirMenuOpPacientes () {
     system("cls");
     imprimirHeader("Registro de Pacientes ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Buscar paciente(s). \n\t2.- Agregar nuevo paciente(s).\n\t3.- Modificar paciente(s). \n\t4.- Eliminar paciente(s).\n\t5.- Listado completo de pacientes.\n\t6.- Volver al Menu Principal.\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Listado completo de pacientes. \n\t2.- Agregar nuevo paciente(s).\n\t3.- Modificar paciente(s). \n\t4.- Eliminar paciente(s).\n\t5.- Buscar paciente(s).\n\t6.- Volver al Menu Principal.\n");
 };
 
 void imprimirMenuOpTurnos () {
+    system("cls");
     imprimirHeader("  Administrar Turnos  ");
     printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Cancelar turno(s).\n\t3.- Cargar turno(s). \n\t4.- Volver al Menu Principal.\n");
 };
 
 void imprimirMenuOpInternaciones () {
+    system("cls");
     imprimirHeader("  Administrar Turnos  ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Cancelar turno(s).\n\t3.- Cargar turno(s). \n\t4.- Volver al Menu Principal.\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Ver internaciones activas. \n\t2.- Ver habitaciones libres.\n\t3.- Ver listado total de habitaciones.\n\t4.- Ingresar nuevo interno. \n\t5.- Modificar interno.\n\t6.- Dar de alta internos.\n\t7.- Volver al Menu Principal.\n");
 };
 
 void imprimirMenuOpMedicos () {
+    system("cls");
     imprimirHeader("  Administrar Medicos ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Listar medicos actualmente en nomina.\n\t2.- Buscar medico.\n\t3.- Cargar nuevo medico(s). \n\t4.- Eliminar medico(s). \n\t5.- Volver al Menu Principal.\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Listar medicos actualmente en nomina.\n\t2.- Buscar medico.\n\t3.- Cargar nuevo medico(s). \n\t4.- Eliminar medico(s). \n\t5.- Modificar medico(s).\n\t6.- Volver al Menu Principal.\n");
 };
