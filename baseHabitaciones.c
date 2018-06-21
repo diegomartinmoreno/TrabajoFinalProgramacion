@@ -22,23 +22,28 @@ void inicializadorHabitaciones(){
 
 
 void cargarHab(){
-    int i=0, hit=0;
-    HABITACION cargar, aux;
+    int nroHabCargar;
+    HABITACION aux;
+    PACIENTE pac;
     FILE *db;
     db=fopen(pathHab, "r+b");
     if (db==NULL){
         perror("Fallo al cargar la base de datos de Habitaciones.");
     }else{
-        cargar=obtenerHab();
-        while (i<(habXPiso*pisosHab)&&hit==0){
-            i++;
-            fread(&aux, sizeof(HABITACION), 1, db);
-            if (aux.nroHabitacion==cargar.nroHabitacion)
-                hit=1;
+        nroHabCargar=obtenerNumHab();
+        aux=buscarHabXNum(nroHabCargar, db);
+        if (aux.ocupado==0){
+            pac=obtenerInternado();
+            if(pac.eliminado==0){
+                aux.dniPac=pac.dni;
+                aux.ocupado=1;
+                fseek(db, -sizeof(HABITACION), SEEK_CUR);
+                fwrite(&aux, sizeof(HABITACION), 1, db);
+                puts("Se ha internado al paciente exitosamente.");
+            }
+        }else{
+            puts("La habitacion seleccionada NO esta libre.");
         }
-        fseek(db, -sizeof(HABITACION), SEEK_CUR);
-        fwrite(&cargar, sizeof(HABITACION), 1, db);
-        puts("Se ha internado al paciente exitosamente.");
     }
     fclose(db);
 }

@@ -30,7 +30,7 @@ PACIENTE buscarXDNI (int buscado){
     PACIENTE pac, encontrado;
     encontrado.eliminado=1;
     fichero = fopen(pathPac, "r+b");
-    int cantPac, i, rep;
+    int cantPac, i;
     if (fichero!=NULL){
         cantPac=contarPacientes(fichero);
         if (cantPac>0){
@@ -38,7 +38,6 @@ PACIENTE buscarXDNI (int buscado){
                 fread(&pac, sizeof(PACIENTE), 1, fichero);
                 if (pac.eliminado==0 && pac.dni==buscado){
                     encontrado=pac;
-                    rep++;
                 }
             }
         }
@@ -46,8 +45,6 @@ PACIENTE buscarXDNI (int buscado){
     else {
         printf("Directorio de fichero %s incorrecto.", pathPac);
     }
-    if (rep>1)
-        puts("ERROR EN LA BASE DE DATOS, EL DNI SE ENCUENTRA INGRESADO EN MAS DE UN PACIENTE");//AGREGAR DEBUG POR USUARIO!!!!!!!!!
     fclose(fichero);
     return encontrado;
 }
@@ -99,13 +96,15 @@ PACIENTE buscarPaciente(){
     char input[sizeNom];
     fflush(stdin);
     gets(input);
-    //La funcion detecta si se ha ingresado un numero o una letra, para buscar por nombre o DNI.
+    //La funcion detecta si se ha ingresado un numero o una letra, para buscar por nombre o DNI respectivamente.
     if (input[0]>48 && input[0]<57){
         int dni = atoi(input);
         pac=buscarXDNI(dni);
     } else {
         pac=buscarXNombreApellido(input);
     }
+    if (pac.eliminado==0)
+        puts("Paciente encontrado.");
     return pac;
 }
 

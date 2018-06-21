@@ -83,15 +83,13 @@ PACIENTE buscarPaciente();
 
 //basePacientes.c
 PACIENTE leerPaciente ();
+void sumarAtencion(int dni);
 PACIENTE guardarPaciente();
 int cargaPacientes ();
 void modificarPacientes ();
-void eliminarPacientes();
+void eliminarPaciente();
+void loopEliminarPacientes();
 void listarPacientes();
-
-// banco de prueba.c
-void subMenuOpc3(int opc); //REGISTRO DE INTERNACIONES
-void menuOp1swt(int op); // REGISTRO DE PACIENTES
 
 // baseMedicos.c
 int contarMedicos(FILE *fichero);
@@ -117,7 +115,17 @@ void listarHabitaciones(int ocupado); // Ocupado -> 0 para listar OCUPADAS, 1 pa
 void cargarHab();
 
 //buscarHabitaciones.c
-HABITACION obtenerHab();
+int obtenerNumHab();
+PACIENTE obtenerInternado();
+int comprobarYaInternado(int dni, FILE *db);
+HABITACION buscarHabXPac(PACIENTE buscado, FILE *db);
+HABITACION buscarHabXNum(int buscado, FILE *db);
+HABITACION buscarInterno(int *hit);
+void darAlta(HABITACION aux, FILE *db);
+void modificarAltaPrevista(HABITACION hab, FILE *db);
+void reemplazarPaciente(HABITACION hab, FILE *db);
+void opModificacion(HABITACION hab, FILE *db);
+void modificarInterno();
 
 //RANDOM solo a fines de ejemplo
 void generarEspecialidad(char resultado[]);

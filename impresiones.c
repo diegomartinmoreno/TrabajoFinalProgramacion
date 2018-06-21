@@ -10,7 +10,7 @@ void imprimirPacientes(PACIENTE pacs[], int dimL){
             printf("\n%c>>> Nombre y apellido: %s", 186, pacs[i].nombreApellido);
             printf("\n%c\tDNI: %i",186,pacs[i].dni);
             printf("\n%c\tEdad: %i",186,pacs[i].edad);
-            printf("\n%c\tFue atendido aqui %i veces.\n", 186,pacs[i].cantAtendido);
+            printf("\n%c\tFue atendido aqui %i vez(es).\n", 186,pacs[i].cantAtendido);
             printf("%c", 200);
             for (j=0; j<50; j++)
                 printf("%c", 205);
@@ -29,7 +29,7 @@ void imprimirHabitacion(HABITACION hab){
     if (hab.ocupado==0)
         printf("%c\tHabitacion LIBRE.\n",186);
     else{
-        printf("%c\tHabitacion ocupada por:",186);
+        printf("%c\tHabitacion OCUPADA por paciente:\n",186);
         pac=buscarXDNI(hab.dniPac);
         imprimirPacientes(&pac, 1);
         printf("%c\t Fecha de ingreso: %i/%i/%i", 186, hab.ingreso.dia, hab.ingreso.mes, hab.ingreso.ano);
@@ -38,7 +38,7 @@ void imprimirHabitacion(HABITACION hab){
     printf("%c", 200);
     for (j=0; j<50; j++)
         printf("%c", 205);
-    printf("\n");
+    printf("\n\n");
 
 }
 

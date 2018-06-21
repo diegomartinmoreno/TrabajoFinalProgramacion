@@ -64,12 +64,13 @@ void menuOpPacientes(){
             case 4:
                 system("cls");
                 imprimirHeader("  Eliminar Pacientes  ");
-                eliminarPacientes();
+                loopEliminarPacientes();
                 system("pause");
             break;
             case 5:
                 system("cls");
                 imprimirHeader(" Busqueda de Pacientes");
+                puts("Ingrese nombre o documento del paciente buscado:");
                 pac=buscarPaciente();
                 imprimirPacientes(&pac,1);
                 system("pause");
@@ -100,6 +101,12 @@ void menuOpInternaciones(){
             case 1:
                 system("cls");
                 imprimirHeader("    Buscar interno    ");
+                int internado=0;
+                HABITACION impr;
+                impr=buscarInterno(&internado);
+                if (internado){
+                    imprimirHabitacion(impr);
+                }
                 system("pause");
             break;
             case 2:
@@ -129,11 +136,24 @@ void menuOpInternaciones(){
             case 6:
                 system("cls");
                 imprimirHeader("   Modificar Interno  ");
+                modificarInterno();
                 system("pause");
             break;
             case 7:
                 system("cls");
                 imprimirHeader("  Dar interno de Alta ");
+                HABITACION h;
+                int success=0;
+                h=buscarInterno(&success);
+                if(success){
+                    FILE *db=fopen(pathHab, "r+b");
+                    darAlta(h, db);
+                    sumarAtencion(h.dniPac);
+                    fclose(db);
+                    puts("El paciente ha sido dado de alta.");
+                } else{
+                    puts("Interno no encontrado.");
+                }
                 system("pause");
             break;
             case 8:
@@ -149,6 +169,10 @@ void menuOpInternaciones(){
             break;
         }
     }while (control!='s'&&control!='S');
+}
+
+void menuOpTurnos(){
+
 }
 
 void menuOpMedicos(){
@@ -202,10 +226,6 @@ void menuOpMedicos(){
             break;
         }
     }while (control!='s'&&control!='S');
-}
-
-void menuOpTurnos(){
-
 }
 
 void SwitchMenuPrincipal(){

@@ -17,6 +17,31 @@ PACIENTE leerPaciente (){
     return pac;
 }
 
+void sumarAtencion(int dni){
+    PACIENTE aux;
+    int hit=0, i=0, cantPac;
+    aux=buscarXDNI(dni);
+    FILE *db;
+    db=fopen(pathPac,"r+b");
+    if (db==NULL){
+        puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
+    }else {
+        cantPac=contarPacientes(db);
+        while(i<cantPac&&hit==0){
+            fread(&aux, sizeof(PACIENTE), 1, db);
+            i++;
+            if(aux.dni==dni)
+                hit=1;
+        }
+        if (hit){
+            aux.cantAtendido++;
+            fseek(db, -sizeof(PACIENTE), SEEK_CUR);
+            fwrite(&aux, sizeof(PACIENTE), 1, db);
+        }else{puts("DNI no coincide con ningun paciente, error en atencion++.");}
+    }
+    fclose(db);
+}
+
 void modificarPacientes (){
     char control='s';
     PACIENTE pac, aux;
@@ -40,6 +65,7 @@ void modificarPacientes (){
                 fseek(db, -sizeof(PACIENTE), SEEK_CUR);
                 aux=leerPaciente();
                 fwrite(&aux, sizeof(PACIENTE), 1, db);
+                puts("Paciente modificado exitosamente.");
             } else {
                 puts("El paciente que desea modificar no se encuentra en la base de datos.");
             }
@@ -51,42 +77,47 @@ void modificarPacientes (){
         puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
     }
     fclose(db);
+    eliminarPaciente(aux.dni);
 }
 
-void eliminarPacientes(){
-    char control='s';
-    PACIENTE pac, aux;
+void eliminarPaciente(int dni){
+    int cantPac, encontrado=0, i=0;
     FILE *db;
-    int encontrado=0, i=0, cantPac;
+    PACIENTE aux;
     db=fopen(pathPac, "r+b");
-    if (db!=NULL){
-        while(control=='s'||control=='S'){
-            puts("Ingrese el nombre completo o documento del paciente que desea eliminar:");
-            pac=buscarPaciente();
-            cantPac=contarPacientes(db);
-            while (encontrado==0&&i<cantPac){
-                i++;
-                fread(&aux, sizeof(PACIENTE), 1, db);
-                if (pac.dni==aux.dni){
-                    encontrado=1;
-                }
-            }
-            if (pac.dni==aux.dni){
-                fseek(db, -sizeof(PACIENTE), SEEK_CUR);
-                aux.eliminado=1;
-                fwrite(&aux, sizeof(PACIENTE), 1, db);
-                puts("Eliminado exitosamente.");
-            } else {
-                puts("El paciente que desea modificar no se encuentra en la base de datos.");
-            }
-            puts("Desea eliminar otro paciente? S/N");
-            fflush(stdin);
-            control=getchar();
-        }
-    }else {
+    if(db==NULL){
         puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
+    }else{
+        cantPac=contarPacientes(db);
+        while (encontrado==0&&i<cantPac){
+            i++;
+            fread(&aux, sizeof(PACIENTE), 1, db);
+            if (dni==aux.dni){
+                encontrado=1;
+            }
+        }
+        if (dni==aux.dni){
+            fseek(db, -sizeof(PACIENTE), SEEK_CUR);
+            aux.eliminado=1;
+            fwrite(&aux, sizeof(PACIENTE), 1, db);
+        } else {
+            puts("El paciente que desea modificar no se encuentra en la base de datos.");
+        }
     }
     fclose(db);
+}
+
+void loopEliminarPacientes(){
+    char control='s';
+    PACIENTE pac;
+    while(control=='s'||control=='S'){
+        puts("Ingrese el nombre completo o documento del paciente que desea eliminar:");
+        pac=buscarPaciente();
+        eliminarPaciente(pac.dni);
+        puts("Desea eliminar otro paciente? S/N");
+        fflush(stdin);
+        control=getchar();
+    }
 }
 
 PACIENTE guardarPaciente(){
@@ -98,7 +129,7 @@ PACIENTE guardarPaciente(){
     if (db==NULL){
         puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
     }else {
-        if(aux.eliminado==0)
+        if(aux.eliminado==1)
             fwrite(&pac, sizeof(PACIENTE), 1, db);
         else
             puts("La persona que intenta cargar ya se encuentra en la base de datos.");
