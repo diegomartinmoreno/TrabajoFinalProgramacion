@@ -112,19 +112,17 @@ void menuOpInternaciones(){
             case 2:
                 system("cls");
                 imprimirHeader("   Internos activos   ");
-                listarHabitaciones(1);
+
                 system("pause");
             break;
             case 3:
                 system("cls");
                 imprimirHeader("   Hab. disponibles   ");
-                listarHabitaciones(0);
                 system("pause");
             break;
             case 4:
                 system("cls");
                 imprimirHeader(" Listado habitaciones ");
-                listarHabitaciones(2);
                 system("pause");
             break;
             case 5:
@@ -172,7 +170,43 @@ void menuOpInternaciones(){
 }
 
 void menuOpTurnos(){
+    char control='n';
+    int op;
+    do{
+        imprimirMenuOpTurnos ();
+        fflush(stdin);
+        scanf("%i", &op);
+        switch(op){
+            case 1:
+                system("cls");
+                imprimirHeader("   Listado de turnos  ");
+                imprimirTurnosXMedico();
+                system("pause");
+            break;
+            case 2:
+                system("cls");
+                imprimirHeader("   Internos activos   ");
 
+                system("pause");
+            break;
+            case 3:
+                system("cls");
+                imprimirHeader("   Hab. disponibles   ");
+                system("pause");
+            break;
+            case 4:
+                puts("Volver al menu principal? S/N\n");
+                fflush(stdin);
+                scanf("%c",&control);
+            break;
+            default:
+                puts("OPCION INCORRECTA.");
+                system("pause");
+                system("cls");
+                menuOpInternaciones();
+            break;
+        }
+    }while (control!='s'&&control!='S');
 }
 
 void menuOpMedicos(){

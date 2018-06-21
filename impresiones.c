@@ -58,6 +58,56 @@ void imprimirMedicos(MEDICO meds[], int dimL){
     }
 }
 
+void imprimirTurno(TURNO turno, int op){
+    PACIENTE pac;
+    switch (op){
+        case 0:
+            if (turno.ocupado==1)
+                printf("Turno libre para el [%i] a las [%.2f]", turno.dia, turno.hora);
+        break;
+        case 1:
+            if(turno.ocupado==0){
+                pac=buscarXDNI(turno.dniPaciente);
+                printf("Turno reservado para el [%i] a las [%.2f] por:", turno.dia, turno.hora);
+                imprimirPacientes(&pac, 1);
+            }
+        break;
+        case 2:
+            printf("Turno ");
+            if (turno.ocupado==1){
+                printf("reservado ");
+            }else{ printf("libre ");}
+            printf("para el [%i] a las [%.2f]", turno.dia, turno.hora);
+            if (turno.ocupado==1){
+                printf("por:");
+                pac=buscarXDNI(turno.dniPaciente);
+                imprimirPacientes(&pac, 1);
+            }
+            printf("\n");
+        break;
+    }
+}
+
+void listarTurnos(TURNO turno[], int op){ //op=0 imprime turnos libres, op=1 imprime turnos reservados y op=2 imprime todos los turnos.
+    int d, t, j;
+    if (op>=0&&op<=2){
+        for (d=0; d<7; d++){
+            printf("%c", 201);
+            for (j=0; j<50; j++)
+                printf("%c", 205);
+            for (t=0;t<10;t++){
+                imprimirTurno(turno[(d*10)+t], op);
+            }
+            printf("%c", 200);
+            for (j=0; j<50; j++)
+                printf("%c", 205);
+        printf("\n");
+        }
+    }else{
+        puts("Parametro de impresion de turnos invalido.");
+    }
+}
+
 //PARA QUEDAR CENTRADO DEBE RECIBIR UN STRING DE 22 CARACTERES.
 void imprimirHeader(char titulo[]){
     int i;

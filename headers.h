@@ -15,6 +15,7 @@
 #define pathPac ".\\dataPac"
 #define pathMed ".\\dataMed"
 #define pathHab ".\\dataHab"
+#define pathTurn ".\\dataTurn"
 
 typedef struct{
     int ano;
@@ -65,6 +66,8 @@ void menuOpMedicos();
 void SwitchMenuPrincipal();
 
 ////impresiones.c
+void listarTurnos(TURNO turno[], int op);
+void imprimirTurno(TURNO turno, int op);
 void imprimirMedicos(MEDICO meds[], int dimL);
 void imprimirPacientes(PACIENTE pacs[], int dimL);
 void imprimirHabitacion(HABITACION hab);
@@ -126,6 +129,14 @@ void modificarAltaPrevista(HABITACION hab, FILE *db);
 void reemplazarPaciente(HABITACION hab, FILE *db);
 void opModificacion(HABITACION hab, FILE *db);
 void modificarInterno();
+
+//baseTurnos.c
+
+
+//buscarTurnos.c
+void imprimirTurnosXMedico ();
+TURNO leerTurno(int matMed);
+TURNO buscarDisp(TURNO tur[], int dia, float hora);
 
 //RANDOM solo a fines de ejemplo
 void generarEspecialidad(char resultado[]);
