@@ -2,8 +2,8 @@
 
 void generarEspecialidad(char resultado[]){
     int i;
-    char especs[8][sizeNom] = {{"Cardiologo"},{"Urologo"},{"Obstetra"},{"Clinico"},{"Oncologo"},{"Dermatologo"},{"Cirujano"},{"Psiquiatra"}};
-    i=rand() % 8;
+    char especs[4][sizeNom] = {{"Cardiologo"},{"Urologo"},{"Obstetra"},{"Clinico"}};
+    i=rand() % 4;
     strcpy(resultado, especs[i]);
 }
 

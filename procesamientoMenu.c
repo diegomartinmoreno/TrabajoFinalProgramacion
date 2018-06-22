@@ -82,9 +82,6 @@ void menuOpPacientes(){
             break;
             default:
                 puts("OPCION INCORRECTA.");
-                system("pause");
-                system("cls");
-                menuOpPacientes();
             break;
         }
     }while (control!='s'&&control!='S');
@@ -112,17 +109,19 @@ void menuOpInternaciones(){
             case 2:
                 system("cls");
                 imprimirHeader("   Internos activos   ");
-
+                listarHabitaciones(1);
                 system("pause");
             break;
             case 3:
                 system("cls");
                 imprimirHeader("   Hab. disponibles   ");
+                listarHabitaciones(0);
                 system("pause");
             break;
             case 4:
                 system("cls");
                 imprimirHeader(" Listado habitaciones ");
+                listarHabitaciones(2);
                 system("pause");
             break;
             case 5:
@@ -161,9 +160,6 @@ void menuOpInternaciones(){
             break;
             default:
                 puts("OPCION INCORRECTA.");
-                system("pause");
-                system("cls");
-                menuOpInternaciones();
             break;
         }
     }while (control!='s'&&control!='S');
@@ -179,31 +175,34 @@ void menuOpTurnos(){
         switch(op){
             case 1:
                 system("cls");
-                imprimirHeader("   Listado de turnos  ");
-                imprimirTurnosXMedico();
+                imprimirHeader("   Turnos Reservados  ");
+                imprimirTurnosXMedico(1);
                 system("pause");
             break;
             case 2:
                 system("cls");
-                imprimirHeader("   Internos activos   ");
-
+                imprimirHeader("     Turnos Libres    ");
+                imprimirTurnosXMedico(0);
                 system("pause");
             break;
             case 3:
                 system("cls");
-                imprimirHeader("   Hab. disponibles   ");
+                imprimirHeader("     Cargar Turno     ");
+                cargarTurno();
                 system("pause");
             break;
             case 4:
+                system("cls");
+                imprimirHeader("    Cancelar Turno    ");
+                system("pause");
+            break;
+            case 6:
                 puts("Volver al menu principal? S/N\n");
                 fflush(stdin);
                 scanf("%c",&control);
             break;
             default:
                 puts("OPCION INCORRECTA.");
-                system("pause");
-                system("cls");
-                menuOpInternaciones();
             break;
         }
     }while (control!='s'&&control!='S');
@@ -254,9 +253,6 @@ void menuOpMedicos(){
             break;
             default:
                 puts("OPCION INCORRECTA.");
-                system("pause");
-                system("cls");
-                menuOpMedicos();
             break;
         }
     }while (control!='s'&&control!='S');
@@ -294,9 +290,6 @@ void SwitchMenuPrincipal(){
             break;
             default:
                 puts("OPCION INCORRECTA.");
-                system("pause");
-                system("cls");
-                imprimirMenuPrincipal();
             break;
         }
     }while(flag!='s'&&flag!='S');

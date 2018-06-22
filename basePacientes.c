@@ -77,7 +77,6 @@ void modificarPacientes (){
         puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
     }
     fclose(db);
-    eliminarPaciente(aux.dni);
 }
 
 void eliminarPaciente(int dni){

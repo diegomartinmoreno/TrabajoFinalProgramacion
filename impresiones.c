@@ -58,26 +58,37 @@ void imprimirMedicos(MEDICO meds[], int dimL){
     }
 }
 
+
+void indiceADia(char guardar[], int num){
+    char diasSemana[][sizeNom] = {{"Lun"},{"Mar"},{"Mier"},{"Jue"},{"Vie"},{"Sab"},{"Dom"}};
+    guardar=diasSemana[num-1];
+}
+
 void imprimirTurno(TURNO turno, int op){
     PACIENTE pac;
+    char diaSem[sizeNom];
     switch (op){
         case 0:
-            if (turno.ocupado==1)
-                printf("Turno libre para el [%i] a las [%.2f]", turno.dia, turno.hora);
+            if (turno.ocupado==0)
+                indiceADia(diaSem,turno.dia);
+                printf("%c  Turno libre para el %s a las [%.2f]\n", 186, diaSem, turno.hora);
         break;
         case 1:
-            if(turno.ocupado==0){
+            if(turno.ocupado==1){
                 pac=buscarXDNI(turno.dniPaciente);
-                printf("Turno reservado para el [%i] a las [%.2f] por:", turno.dia, turno.hora);
+                indiceADia(diaSem,turno.dia);
+                printf("%c  Turno reservado para el %s a las [%.2f] por:", 186, diaSem, turno.hora);
                 imprimirPacientes(&pac, 1);
+                printf("\n");
             }
         break;
         case 2:
-            printf("Turno ");
+            printf("%c  Turno ", 186);
             if (turno.ocupado==1){
                 printf("reservado ");
             }else{ printf("libre ");}
-            printf("para el [%i] a las [%.2f]", turno.dia, turno.hora);
+            indiceADia(diaSem,turno.dia);
+            printf("%cpara el %s a las [%.2f]", 186, diaSem, turno.hora);
             if (turno.ocupado==1){
                 printf("por:");
                 pac=buscarXDNI(turno.dniPaciente);
@@ -89,23 +100,17 @@ void imprimirTurno(TURNO turno, int op){
 }
 
 void listarTurnos(TURNO turno[], int op){ //op=0 imprime turnos libres, op=1 imprime turnos reservados y op=2 imprime todos los turnos.
-    int d, t, j;
+    int d, t;
     if (op>=0&&op<=2){
         for (d=0; d<7; d++){
-            printf("%c", 201);
-            for (j=0; j<50; j++)
-                printf("%c", 205);
             for (t=0;t<10;t++){
                 imprimirTurno(turno[(d*10)+t], op);
             }
-            printf("%c", 200);
-            for (j=0; j<50; j++)
-                printf("%c", 205);
-        printf("\n");
         }
     }else{
         puts("Parametro de impresion de turnos invalido.");
     }
+    printf("\n");
 }
 
 //PARA QUEDAR CENTRADO DEBE RECIBIR UN STRING DE 22 CARACTERES.
@@ -157,7 +162,7 @@ void imprimirMenuOpPacientes () {
 void imprimirMenuOpTurnos () {
     system("cls");
     imprimirHeader("  Administrar Turnos  ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Cancelar turno(s).\n\t3.- Cargar turno(s). \n\t4.- Volver al Menu Principal.\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Ver turnos libres.\n\t3.- Cargar turno(s).\n\t4.- Cancelar turno(s). \n\t5.- Volver al Menu Principal.\n");
 };
 
 void imprimirMenuOpInternaciones () {

@@ -29,18 +29,18 @@ void listarMedicos(){
 void inicializarTurno(MEDICO *med){
     int i, d;
     for (d=0;d<7;d++){
-        float inihorario=10;
+        float inihorario=8.8;
         for (i=0;i<10;i++){
-            med->listaTurnos[d*i].dia=d+1;
-            med->listaTurnos[d*i].hora=inihorario;
-            med->listaTurnos[d*i].dniPaciente=0;
-            med->listaTurnos[d*i].ocupado=0;
-            med->listaTurnos[d*i].matMedico=med->matricula;
-            inihorario+=0.3;
+            inihorario+=0.2;
             float result=inihorario-(int)inihorario;
             if (result>=0.59){
                 inihorario=(int)inihorario+1;
             }
+            med->listaTurnos[(d*10)+i].dia=d+1;
+            med->listaTurnos[(d*10)+i].hora=inihorario;
+            med->listaTurnos[(d*10)+i].dniPaciente=0;
+            med->listaTurnos[(d*10)+i].ocupado=0;
+            med->listaTurnos[(d*10)+i].matMedico=med->matricula;
         }
     }
 };

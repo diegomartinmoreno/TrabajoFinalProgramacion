@@ -68,6 +68,7 @@ void SwitchMenuPrincipal();
 ////impresiones.c
 void listarTurnos(TURNO turno[], int op);
 void imprimirTurno(TURNO turno, int op);
+void indiceADia(char guardar[], int num);
 void imprimirMedicos(MEDICO meds[], int dimL);
 void imprimirPacientes(PACIENTE pacs[], int dimL);
 void imprimirHabitacion(HABITACION hab);
@@ -131,12 +132,14 @@ void opModificacion(HABITACION hab, FILE *db);
 void modificarInterno();
 
 //baseTurnos.c
-
+void listarTurnosTodos(int op);
 
 //buscarTurnos.c
 void imprimirTurnosXMedico ();
-TURNO leerTurno(int matMed);
+TURNO leerTurno(int matMed, int d, float h);
+void guardarTurno (TURNO tur, int matMed);
 TURNO buscarDisp(TURNO tur[], int dia, float hora);
+void cargarTurno ();
 
 //RANDOM solo a fines de ejemplo
 void generarEspecialidad(char resultado[]);
