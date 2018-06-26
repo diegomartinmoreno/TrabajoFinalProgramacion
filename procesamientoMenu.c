@@ -172,6 +172,7 @@ void menuOpTurnos(){
     char control='n';
     int op;
     do{
+        void actualizarTurnos();
         imprimirMenuOpTurnos ();
         fflush(stdin);
         scanf("%i", &op);

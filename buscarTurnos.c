@@ -18,6 +18,7 @@ TURNO leerTurno(int matMed, int d, float h){
     PACIENTE pac;
     pac.eliminado=1;
     TURNO tur;
+    tur.ocupado=0;
     int op;
     puts("Complete datos del paciente que hace la reserva: ");
     puts("1.- Reservar con paciente conocido.");

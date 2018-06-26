@@ -135,6 +135,7 @@ void opModificacion(HABITACION hab, FILE *db);
 void modificarInterno();
 
 //baseTurnos.c
+void actualizarTurnos();
 void listarTurnosTodos(int op);
 void cargarTurno ();
 void cancelarTurno();

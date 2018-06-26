@@ -29,14 +29,14 @@ void obtenerDiaYHora(int *dia, float *hora){
         puts("Ingresar dia de la reserva 1 = Lun // 7 = Sab");
         fflush(stdin);
         scanf("%i", dia);
-        *dia--;
-    }while (!(*dia<7&&*dia>=0));
+    }while (*dia>8||*dia<0);
+    *dia=*dia-1;
     do{
     puts("Ingresar hora del dia (Turnos cada 20 minutos, de 9.00 a 12.00hs).");
     fflush(stdin);
     scanf("%f", hora);
     minutos=*hora-(int)*hora;
-    } while (!(*hora>=8.9&&*hora<12.1&&((minutos<0.1&&minutos>-0.1)||(minutos<0.21&&minutos>0.19)||(minutos<0.41&&minutos>0.39))));
+    } while (*hora<8.9||*hora>12.1||!((minutos<0.1&&minutos>-0.1)||(minutos<0.21&&minutos>0.19)||(minutos<0.41&&minutos>0.39)));
 }
 
 void cargarTurno (){
@@ -51,8 +51,10 @@ void cargarTurno (){
         buscado=buscarTur(med.listaTurnos, dia, hora);
         if (buscado.ocupado==0){
             buscado=leerTurno(med.matricula, dia, hora);
-            guardarTurno(buscado,med.matricula);
-            puts("Turno reservado.");
+            if(buscado.ocupado==1){
+                guardarTurno(buscado,med.matricula);
+                puts("Turno reservado.");
+            }else{puts("No se ha reservado. Paciente incorrecto.");}
         } else{puts("No se ha reservado. El turno ya se encuentra ocupado.");}
     }
     else{
@@ -78,23 +80,31 @@ void cancelarTurno(){
     }else {puts("No se pudo cancelar reserva por no encontrarse el medico.");}
 
 }
-/*
+
 void actualizarTurnos(){
     time_t origen;
     struct tm *fecha;
+    float h;
     time(&origen);
     fecha=localtime(&origen);
     MEDICO med;
-    TURNO aux;
-    HABITACION hab;
     FILE *db;
+    h=(float)fecha->tm_min/100;
+    h+=fecha->tm_hour;
     db=fopen(pathMed, "r+b");
-    int cantMed=contarMedicos(), i;
+    int cantMed=contarMedicos(db), i, j;
     for (i=0; i<cantMed; i++){
-        if (fecha->tm_)
+        fread (&med, sizeof(MEDICO), 1, db);
+        for (j=0; j<10; j++){
+            if (med.listaTurnos[j+(fecha->tm_wday*10)].hora<h){
+                med.listaTurnos[j+(fecha->tm_wday*10)].ocupado=0;
+            }
+        }
+        fseek(db, -sizeof(MEDICO), SEEK_CUR);
+        fwrite (&med, sizeof(MEDICO), 1, db);
     }
 }
-*/
+
 void atenderPaciente(){
     MEDICO med;
     TURNO aux;
@@ -151,6 +161,7 @@ void atenderPaciente(){
                     fclose(db);
                     printf("El paciente ha sido internado exitosamente en la habitacion %i", nroHab);
                 }else{puts("El paciente fue atendido exitosamente.");}
+                sumarAtencion(aux.dniPaciente);
             }
         }else{puts("El medico no tiene turnos reservados.");}
     }else {puts("No se pudo atender al paciente por no encontrarse el medico.");}
