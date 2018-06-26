@@ -2,8 +2,8 @@
 
 void generarEspecialidad(char resultado[]){
     int i;
-    char especs[4][sizeNom] = {{"Cardiologo"},{"Urologo"},{"Obstetra"},{"Clinico"}};
-    i=rand() % 4;
+    char especs[][sizeNom] = {{"Cardiologo"},{"Pediatra"},{"Obstetra"},{"Clinico"},{"Oncologo"}};
+    i=rand() % 5;
     strcpy(resultado, especs[i]);
 }
 
@@ -28,7 +28,7 @@ void cargarMedsRandom (int cant){
     }
     else{
         for (i=0; i<cant; i++){
-            m.matricula=(rand () % 20000000) + 15000000;
+            m.matricula=(rand() % 20000000) + 15000000;
             generarNombre(m.nombreApellido);
             generarEspecialidad(m.especialidad);
             m.eliminado=0;
@@ -54,6 +54,7 @@ void cargarPacsRandom(int cant){
             pac.cantAtendido=rand() %5;
             pac.eliminado=0;
             fwrite(&pac,sizeof(PACIENTE),1,db);
+            pac.cantInternado=0;
         }
     }
     fclose(db);

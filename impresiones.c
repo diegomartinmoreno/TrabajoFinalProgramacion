@@ -10,7 +10,8 @@ void imprimirPacientes(PACIENTE pacs[], int dimL){
             printf("\n%c>>> Nombre y apellido: %s", 186, pacs[i].nombreApellido);
             printf("\n%c\tDNI: %i",186,pacs[i].dni);
             printf("\n%c\tEdad: %i",186,pacs[i].edad);
-            printf("\n%c\tFue atendido aqui %i vez(es).\n", 186,pacs[i].cantAtendido);
+            printf("\n%c\tFue atendido aqui %i vez(es).", 186,pacs[i].cantAtendido);
+            printf("\n%c\tFue internado aqui %i vez(es).\n", 186,pacs[i].cantInternado);
             printf("%c", 200);
             for (j=0; j<50; j++)
                 printf("%c", 205);
@@ -61,7 +62,7 @@ void imprimirMedicos(MEDICO meds[], int dimL){
 
 void indiceADia(char guardar[], int num){
     char diasSemana[][sizeNom] = {{"Lun"},{"Mar"},{"Mier"},{"Jue"},{"Vie"},{"Sab"},{"Dom"}};
-    guardar=diasSemana[num-1];
+    strcpy(guardar, diasSemana[num]);
 }
 
 void imprimirTurno(TURNO turno, int op){
@@ -71,13 +72,13 @@ void imprimirTurno(TURNO turno, int op){
         case 0:
             if (turno.ocupado==0)
                 indiceADia(diaSem,turno.dia);
-                printf("%c  Turno libre para el %s a las [%.2f]\n", 186, diaSem, turno.hora);
+                printf("%c Turno libre para el %s a las [%.2f]\n", 186, diaSem, turno.hora);
         break;
         case 1:
             if(turno.ocupado==1){
                 pac=buscarXDNI(turno.dniPaciente);
                 indiceADia(diaSem,turno.dia);
-                printf("%c  Turno reservado para el %s a las [%.2f] por:", 186, diaSem, turno.hora);
+                printf("%c  Turno reservado para el %s a las [%.2f] por:\n", 186, diaSem, turno.hora);
                 imprimirPacientes(&pac, 1);
                 printf("\n");
             }
@@ -162,7 +163,7 @@ void imprimirMenuOpPacientes () {
 void imprimirMenuOpTurnos () {
     system("cls");
     imprimirHeader("  Administrar Turnos  ");
-    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Ver turnos libres.\n\t3.- Cargar turno(s).\n\t4.- Cancelar turno(s). \n\t5.- Volver al Menu Principal.\n");
+    printf("Ingrese una opcion para continuar:\n\t1.- Ver turnos reservados. \n\t2.- Ver turnos libres.\n\t3.- Cargar turno(s).\n\t4.- Cancelar turno(s). \n\t5.- Atender paciente. \n\t6.- Volver al Menu Principal.\n");
 };
 
 void imprimirMenuOpInternaciones () {

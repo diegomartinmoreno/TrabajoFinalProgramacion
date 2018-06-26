@@ -1,8 +1,40 @@
 #include "headers.h"
 
+int obtenerEspecialidades(char especs[pisosHab][sizeNom]){
+    FILE *db;
+    int cantMed, i=0, cantEspec=0, hit, j;
+    MEDICO aux;
+    db=fopen(pathMed, "rb");
+    cantMed=contarMedicos(db);
+    while (i<cantMed){
+        fread(&aux, sizeof(MEDICO), 1, db);
+        hit=1;
+        for (j=0; j<cantEspec; j++){
+            if (strcmp(especs[j], aux.especialidad)==0)
+                hit=0;
+        }
+        if (hit==1){
+            strcpy(especs[cantEspec], aux.especialidad);
+            cantEspec++;
+        }
+        i++;
+    }
+    return cantEspec;
+}
+
+void imprimirEspecialidades(char especs[pisosHab][sizeNom]){
+    int i;
+    for(i=0; i<pisosHab; i++){
+        printf("Piso %i, especialidad %s\n", i*100, especs[i]);
+    }
+}
+
 int obtenerNumHab(){
     int hit=0, numHab;
-
+    char especs[pisosHab][sizeNom];
+    puts("Especialidades por piso:");
+    obtenerEspecialidades(especs);
+    imprimirEspecialidades(especs);
     do{
         puts("Ingrese numero de habitacion valido:");
         fflush(stdin);

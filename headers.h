@@ -21,13 +21,14 @@ typedef struct{
     int ano;
     int mes;
     int dia;
-}FECHA; // Agregado para manejo automatico de desocupacion.
+}FECHA; // Agregado para manejo automatico de alta de internos.
 
 typedef struct{
     char nombreApellido[sizeNom];
     int dni;
     int edad;
     int cantAtendido;
+    int cantInternado;
     int eliminado;
 }PACIENTE;
 
@@ -58,7 +59,6 @@ typedef struct{
 // procesamientoMenu.c
 int inicializarBasesDatos(char path[]);
 void iniciarSistema();
-
 void menuOpPacientes();
 void menuOpTurnos();
 void menuOpInternaciones();
@@ -86,8 +86,9 @@ PACIENTE buscarXNombreApellido (char nomApe[]);
 PACIENTE buscarPaciente();
 
 //basePacientes.c
-PACIENTE leerPaciente ();
+PACIENTE leerPaciente (PACIENTE pac, int nuevo);
 void sumarAtencion(int dni);
+void sumarInternacion(int dni);
 PACIENTE guardarPaciente();
 int cargaPacientes ();
 void modificarPacientes ();
@@ -106,7 +107,7 @@ MEDICO leerMedico();
 void cargaMedicos();
 
 // buscarMedico.c
-int Encontrado(char mat[][sizeNom], char buscado[], int dimL);
+int Encontrado(char mat[][sizeNom], char buscado[]);
 int determinarEspecialidades (char especialidades[][sizeNom]);
 void ordenarMedicos(MEDICO meds[], int dimL);
 MEDICO imprimirXESPEC(char busqueda[]);
@@ -114,12 +115,14 @@ MEDICO imprimirXNOM(char busqueda[]);
 MEDICO buscarMed();
 
 //baseHabitaciones.c
+void guardarHabitacion(HABITACION guardar, FILE *db);
 void inicializadorHabitaciones();
 void listarHabitaciones(int ocupado); // Ocupado -> 0 para listar OCUPADAS, 1 para listar LIBRES, 2 para listar TODAS.
 void cargarHab();
 
 //buscarHabitaciones.c
 int obtenerNumHab();
+int obtenerEspecialidades(char especs[pisosHab][sizeNom]);
 PACIENTE obtenerInternado();
 int comprobarYaInternado(int dni, FILE *db);
 HABITACION buscarHabXPac(PACIENTE buscado, FILE *db);
@@ -133,13 +136,16 @@ void modificarInterno();
 
 //baseTurnos.c
 void listarTurnosTodos(int op);
+void cargarTurno ();
+void cancelarTurno();
+void guardarTurno (TURNO tur, int matMed);
+void atenderPaciente();
 
 //buscarTurnos.c
 void imprimirTurnosXMedico ();
 TURNO leerTurno(int matMed, int d, float h);
-void guardarTurno (TURNO tur, int matMed);
-TURNO buscarDisp(TURNO tur[], int dia, float hora);
-void cargarTurno ();
+TURNO buscarTur(TURNO tur[], int dia, float hora);
+
 
 //RANDOM solo a fines de ejemplo
 void generarEspecialidad(char resultado[]);

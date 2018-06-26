@@ -20,6 +20,20 @@ void inicializadorHabitaciones(){
     fclose(db);
 }
 
+void guardarHabitacion(HABITACION guardar, FILE *db){
+    int i, hit=0;
+    fseek(db,0,SEEK_SET);
+    HABITACION aux;
+    while (i<(pisosHab*habXPiso)&&hit==0){
+        fread(&aux, sizeof(HABITACION), 1, db);
+        if (guardar.nroHabitacion==aux.nroHabitacion){
+            hit=1;
+        }
+        i++;
+    }
+    fseek(db, -sizeof(HABITACION), SEEK_CUR);
+    fwrite(&guardar, sizeof(HABITACION), 1, db);
+}
 
 void cargarHab(){
     int nroHabCargar;

@@ -36,7 +36,7 @@ void inicializarTurno(MEDICO *med){
             if (result>=0.59){
                 inihorario=(int)inihorario+1;
             }
-            med->listaTurnos[(d*10)+i].dia=d+1;
+            med->listaTurnos[(d*10)+i].dia=d;
             med->listaTurnos[(d*10)+i].hora=inihorario;
             med->listaTurnos[(d*10)+i].dniPaciente=0;
             med->listaTurnos[(d*10)+i].ocupado=0;
@@ -45,24 +45,27 @@ void inicializarTurno(MEDICO *med){
     }
 };
 
-MEDICO leerMedico(){
-    MEDICO m;
+MEDICO leerMedico(MEDICO m, int nuevo){ // nuevo=1 para un medico nuevo, nuevo=0 para leer un medico ya cargado.
     printf("INGRESE NOMBRE Y APELLIDO\n");
     fflush(stdin);
     gets(m.nombreApellido);
-    printf("INGRESE MATRICULA\n");
-    fflush(stdin);
-    scanf("%i",&m.matricula);
-    printf("INGRESE ESPECIALIDAD\n");
-    fflush(stdin);
-    gets(m.especialidad);
-    inicializarTurno(&m);
+    if (nuevo==1){
+        printf("INGRESE MATRICULA\n");
+        fflush(stdin);
+        scanf("%i",&m.matricula);
+        printf("INGRESE ESPECIALIDAD\n");
+        fflush(stdin);
+        gets(m.especialidad);
+        inicializarTurno(&m);
+    }
     m.eliminado=0;
     return m;
 };
 
 void cargaMedicos(){
     char control='s';
+    char especialidades[pisosHab][sizeNom];
+    obtenerEspecialidades(especialidades);
     FILE *db;
     MEDICO m;
     if ((db=fopen(pathMed,"a+b"))==NULL){
@@ -70,8 +73,11 @@ void cargaMedicos(){
     }
     else{
         while (control=='s'||control=='S'){
-            m=leerMedico();
-            fwrite(&m,sizeof(MEDICO),1,db);
+            m=leerMedico(m, 1);
+            if (Encontrado(especialidades, m.especialidad))
+                fwrite(&m,sizeof(MEDICO),1,db);
+            else
+                puts("No ingreso una especialidad que se trabaje en esta clinica.");
             fflush(stdin);
             printf("Desea Continuar? S/N\n");
             control=getchar();
@@ -118,16 +124,6 @@ void eliminarMedico(){
     fclose(fichero);
 };
 
-void modificarMedicos(){
-    char control='s';
-    while (control=='s'||control=='S'){
-            modificarMedico();
-            puts("Desea modificar otro medico? S/N");
-            fflush(stdin);
-            scanf("%c", &control);
-    }
-};
-
 void modificarMedico(){
     MEDICO med, aux;
     med=buscarMed();
@@ -147,11 +143,21 @@ void modificarMedico(){
             }
             fseek(fichero, -sizeof(MEDICO), SEEK_CUR);
             puts("Ingrese modificaciones:");
-            aux=leerMedico();
+            aux=leerMedico(aux, 0);
             fwrite(&aux, sizeof(MEDICO), 1, fichero);
         } else{
             puts("El medico que desea modificar no se encuentra en la base de datos.");
         }
     }
     fclose(fichero);
+};
+
+void modificarMedicos(){
+    char control='s';
+    while (control=='s'||control=='S'){
+            modificarMedico();
+            puts("Desea modificar otro medico? S/N");
+            fflush(stdin);
+            scanf("%c", &control);
+    }
 };

@@ -1,20 +1,47 @@
 #include "headers.h"
 
 
-PACIENTE leerPaciente (){
-    PACIENTE pac;
+PACIENTE leerPaciente (PACIENTE pac, int nuevo){ // nuevo=1 para un paciente nuevo, nuevo=0 para leer uno cargado.
     pac.eliminado=0;
-    pac.cantAtendido=0;
     printf("INGRESE NOMBRE Y APELLIDO\n");
     fflush(stdin);
     gets(pac.nombreApellido);
-    printf("INGRESE DNI\n");
-    fflush(stdin);
-    scanf("%i",&pac.dni);
+    if (nuevo==1){
+        printf("INGRESE DNI\n");
+        fflush(stdin);
+        scanf("%i",&pac.dni);
+        pac.cantAtendido=0;
+        pac.cantInternado=0;
+    }
     printf("INGRESE EDAD\n");
     fflush(stdin);
     scanf("%i",&pac.edad);
     return pac;
+}
+
+void sumarInternacion(int dni){
+    PACIENTE aux;
+    int hit=0, i=0, cantPac;
+    aux=buscarXDNI(dni);
+    FILE *db;
+    db=fopen(pathPac,"r+b");
+    if (db==NULL){
+        puts("ERROR EN APERTURA DE ARCHIVO PACIENTES.");
+    }else {
+        cantPac=contarPacientes(db);
+        while(i<cantPac&&hit==0){
+            fread(&aux, sizeof(PACIENTE), 1, db);
+            i++;
+            if(aux.dni==dni)
+                hit=1;
+        }
+        if (hit){
+            aux.cantInternado++;
+            fseek(db, -sizeof(PACIENTE), SEEK_CUR);
+            fwrite(&aux, sizeof(PACIENTE), 1, db);
+        }else{puts("DNI no coincide con ningun paciente, error en internacion++.");}
+    }
+    fclose(db);
 }
 
 void sumarAtencion(int dni){
@@ -63,7 +90,7 @@ void modificarPacientes (){
             }
             if (pac.dni==aux.dni){
                 fseek(db, -sizeof(PACIENTE), SEEK_CUR);
-                aux=leerPaciente();
+                aux=leerPaciente(aux, 0);
                 fwrite(&aux, sizeof(PACIENTE), 1, db);
                 puts("Paciente modificado exitosamente.");
             } else {
@@ -121,7 +148,7 @@ void loopEliminarPacientes(){
 
 PACIENTE guardarPaciente(){
     PACIENTE pac, aux;
-    pac=leerPaciente();
+    pac=leerPaciente(pac, 1);
     aux=buscarXDNI(pac.dni);
     FILE *db;
     db=fopen(pathPac,"ab");

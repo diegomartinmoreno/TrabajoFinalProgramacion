@@ -145,7 +145,7 @@ void menuOpInternaciones(){
                 if(success){
                     FILE *db=fopen(pathHab, "r+b");
                     darAlta(h, db);
-                    sumarAtencion(h.dniPac);
+                    sumarInternacion(h.dniPac);
                     fclose(db);
                     puts("El paciente ha sido dado de alta.");
                 } else{
@@ -194,6 +194,13 @@ void menuOpTurnos(){
             case 4:
                 system("cls");
                 imprimirHeader("    Cancelar Turno    ");
+                cancelarTurno();
+                system("pause");
+            break;
+            case 5:
+                system("cls");
+                imprimirHeader("   Atender Paciente   ");
+                atenderPaciente();
                 system("pause");
             break;
             case 6:
