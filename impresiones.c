@@ -113,9 +113,24 @@ void listarTurnos(TURNO turno[], int op){ //op=0 imprime turnos libres, op=1 imp
     printf("\n");
 }
 
+void textcolor (int color)
+{
+    static int __BACKGROUND;
+
+    HANDLE h = GetStdHandle ( STD_OUTPUT_HANDLE );
+    CONSOLE_SCREEN_BUFFER_INFO csbiInfo;
+
+
+    GetConsoleScreenBufferInfo(h, &csbiInfo);
+
+    SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE),
+                             color + (__BACKGROUND << 4));
+}
+
 //PARA QUEDAR CENTRADO DEBE RECIBIR UN STRING DE 22 CARACTERES.
 void imprimirHeader(char titulo[]){
     int i;
+    textcolor(2);
     printf("\n%c", 201);
     printf("%c", 205);
     for (i=0; i<19; i++){
@@ -130,7 +145,11 @@ void imprimirHeader(char titulo[]){
     printf("%c", 205);
     printf("%c\n", 187);
     printf("%c%42s%21c\n", 186, " ", 186);
-    printf("%c%42s%21c\n", 186, titulo, 186);
+    printf("%c%", 186);
+    textcolor(15);
+    printf("%42s", titulo);
+    textcolor(2);
+    printf("%21c\n", 186);
     printf("%c%42s%21c\n", 186, " ", 186);
     printf("%c", 200);
     printf("%c", 205);
@@ -145,6 +164,7 @@ void imprimirHeader(char titulo[]){
     }
     printf("%c", 205);
     printf("%c\n\n", 188);
+    textcolor(15);
 };
 
 void imprimirMenuPrincipal (){
