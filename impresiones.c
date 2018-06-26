@@ -34,7 +34,7 @@ void imprimirHabitacion(HABITACION hab){
         pac=buscarXDNI(hab.dniPac);
         imprimirPacientes(&pac, 1);
         printf("%c\t Fecha de ingreso: %i/%i/%i", 186, hab.ingreso.dia, hab.ingreso.mes, hab.ingreso.ano);
-        printf("\n%c\t Fecha de alta prevista: %i/%i/%i\n", 186, hab.ingreso.dia, hab.ingreso.mes, hab.ingreso.ano);
+        printf("\n%c\t Fecha de alta prevista: %i/%i/%i\n", 186, hab.alta.dia, hab.alta.mes, hab.alta.ano);
         }
     printf("%c", 200);
     for (j=0; j<50; j++)

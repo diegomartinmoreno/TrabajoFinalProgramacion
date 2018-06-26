@@ -21,7 +21,30 @@ void inicializadorHabitaciones(){
 }
 
 void guardarHabitacion(HABITACION guardar, FILE *db){
-    int i, hit=0;
+    time_t origen;
+    struct tm *fecha;
+    time(&origen);
+    fecha=localtime(&origen);
+    guardar.ingreso.ano=fecha->tm_year+1900;
+    guardar.ingreso.mes=fecha->tm_mon+1;
+    guardar.ingreso.dia=fecha->tm_mday;
+    puts("Ingrese fecha prevista de alta:");
+    do{
+        printf("Dia: \n");
+        fflush(stdin);
+        scanf("%i", &guardar.alta.dia);
+    } while (guardar.alta.dia<1||guardar.alta.dia>31);
+    do{
+        printf("Mes: \n");
+        fflush(stdin);
+        scanf("%i", &guardar.alta.mes);
+    } while (guardar.alta.mes<1||guardar.alta.mes>12);
+    do{
+        printf("Ano: \n");
+        fflush(stdin);
+        scanf("%i", &guardar.alta.ano);
+    } while (guardar.alta.ano<(fecha->tm_year+1900));
+    int i=0, hit=0;
     fseek(db,0,SEEK_SET);
     HABITACION aux;
     while (i<(pisosHab*habXPiso)&&hit==0){
@@ -51,8 +74,7 @@ void cargarHab(){
             if(pac.eliminado==0){
                 aux.dniPac=pac.dni;
                 aux.ocupado=1;
-                fseek(db, -sizeof(HABITACION), SEEK_CUR);
-                fwrite(&aux, sizeof(HABITACION), 1, db);
+                guardarHabitacion(aux, db);
                 puts("Se ha internado al paciente exitosamente.");
             }
         }else{
