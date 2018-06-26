@@ -78,7 +78,23 @@ void cancelarTurno(){
     }else {puts("No se pudo cancelar reserva por no encontrarse el medico.");}
 
 }
-
+/*
+void actualizarTurnos(){
+    time_t origen;
+    struct tm *fecha;
+    time(&origen);
+    fecha=localtime(&origen);
+    MEDICO med;
+    TURNO aux;
+    HABITACION hab;
+    FILE *db;
+    db=fopen(pathMed, "r+b");
+    int cantMed=contarMedicos(), i;
+    for (i=0; i<cantMed; i++){
+        if (fecha->tm_)
+    }
+}
+*/
 void atenderPaciente(){
     MEDICO med;
     TURNO aux;

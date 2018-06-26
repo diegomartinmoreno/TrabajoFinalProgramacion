@@ -20,6 +20,30 @@ void inicializadorHabitaciones(){
     fclose(db);
 }
 
+void actualizarBase(){
+    int i;
+    time_t origen;
+    struct tm *fecha;
+    HABITACION hab;
+    time(&origen);
+    fecha=localtime(&origen);
+    FILE *db;
+    db=fopen(pathHab, "r+b");
+    for (i=0; i<(pisosHab*habXPiso); i++){
+        fread(&hab, sizeof(HABITACION), 1, db);
+        if (hab.ocupado==1){
+            if (fecha->tm_mday>hab.alta.dia){
+                if (fecha->tm_mon>=hab.alta.mes){
+                    if ((fecha->tm_year+1900)>=hab.alta.ano){
+                        hab.ocupado=0;
+                        guardarHabitacion(hab, db);
+                    }
+                }
+            }
+        }
+    }
+}
+
 void guardarHabitacion(HABITACION guardar, FILE *db){
     time_t origen;
     struct tm *fecha;

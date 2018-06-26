@@ -12,15 +12,6 @@ int Encontrado(char mat[][sizeNom], char buscado[]){
     return encontrado;
 }
 
-void ordenarMedicos(MEDICO meds[], int dimL){ //COMPLETAR!!!!
-    int i, j;
-    for (i=0; i<dimL ;i++){
-        for (j=dimL-i; j<0; j++){
-
-        }
-    }
-}
-
 MEDICO imprimirXESPEC(char busqueda[]){
     int hits=0, seleccion, cantMed, i=0;
     FILE *dataMed;
@@ -107,6 +98,8 @@ MEDICO buscarMed()
     MEDICO med;
     char especialidades[50][sizeNom], busqueda[sizeNom];
     int noEsNombre;
+    obtenerEspecialidades(especialidades);
+    imprimirEspecialidades(especialidades);
     puts("Ingrese nombre del medico o especialidad buscada:\n");
     fflush(stdin);
     gets(busqueda);

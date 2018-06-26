@@ -59,7 +59,6 @@ void imprimirMedicos(MEDICO meds[], int dimL){
     }
 }
 
-
 void indiceADia(char guardar[], int num){
     char diasSemana[][sizeNom] = {{"Lun"},{"Mar"},{"Mier"},{"Jue"},{"Vie"},{"Sab"},{"Dom"}};
     strcpy(guardar, diasSemana[num]);

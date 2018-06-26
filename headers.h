@@ -109,7 +109,6 @@ void cargaMedicos();
 // buscarMedico.c
 int Encontrado(char mat[][sizeNom], char buscado[]);
 int determinarEspecialidades (char especialidades[][sizeNom]);
-void ordenarMedicos(MEDICO meds[], int dimL);
 MEDICO imprimirXESPEC(char busqueda[]);
 MEDICO imprimirXNOM(char busqueda[]);
 MEDICO buscarMed();
@@ -121,6 +120,7 @@ void listarHabitaciones(int ocupado); // Ocupado -> 0 para listar OCUPADAS, 1 pa
 void cargarHab();
 
 //buscarHabitaciones.c
+void actualizarBase();
 int obtenerNumHab();
 int obtenerEspecialidades(char especs[pisosHab][sizeNom]);
 PACIENTE obtenerInternado();

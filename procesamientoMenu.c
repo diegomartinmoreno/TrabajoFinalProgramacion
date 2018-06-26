@@ -28,6 +28,8 @@ void iniciarSistema(){
     }
     if (inicializarBasesDatos(pathHab)){
         inicializadorHabitaciones();
+    }else{
+        actualizarBase();
     }
     SwitchMenuPrincipal();
 };
@@ -91,6 +93,7 @@ void menuOpInternaciones(){
     char control='n';
     int op;
     do{
+        actualizarBase();
         imprimirMenuOpInternaciones();
         fflush(stdin);
         scanf("%i", &op);
