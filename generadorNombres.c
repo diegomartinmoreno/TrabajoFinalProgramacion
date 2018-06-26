@@ -28,7 +28,13 @@ void cargarMedsRandom (int cant){
     }
     else{
         for (i=0; i<cant; i++){
-            m.matricula=(rand() % 20000000) + 15000000;
+            m.matricula=rand()%10*10000000;
+            m.matricula+=((rand() % 10)*1000000);
+            m.matricula+=((rand() % 10)*100000);
+            m.matricula+=((rand() % 10)*10000);
+            m.matricula+=((rand() % 10)*10000);
+            m.matricula+=((rand() % 10)*1000);
+            m.matricula+=rand()%1000;
             generarNombre(m.nombreApellido);
             generarEspecialidad(m.especialidad);
             m.eliminado=0;
@@ -48,13 +54,19 @@ void cargarPacsRandom(int cant){
     }
     else{
         for (i=0; i<cant; i++){
-            pac.dni=(rand () % 20000000) + 15000000;
+            pac.dni=rand()%5*10000000;
+            pac.dni+=(((rand() % 9)+1)*1000000);
+            pac.dni+=((rand() % 10)*100000);
+            pac.dni+=((rand() % 10)*10000);
+            pac.dni+=((rand() % 10)*10000);
+            pac.dni+=((rand() % 10)*1000);
+            pac.dni+=rand()%1000;
             generarNombre(pac.nombreApellido);
             pac.edad=rand() % 91;
             pac.cantAtendido=rand() %5;
             pac.eliminado=0;
-            fwrite(&pac,sizeof(PACIENTE),1,db);
             pac.cantInternado=0;
+            fwrite(&pac,sizeof(PACIENTE),1,db);
         }
     }
     fclose(db);
